@@ -34,6 +34,9 @@ categories.forEach(category => {
 categories.forEach(category => {
     category.addEventListener('click', displayCategoryHeading)
 })
+categories.forEach(category => {
+    category.addEventListener('click', setActiveCategory)
+})
 }
 
 const renderTasks = (e) => {
@@ -59,6 +62,7 @@ const removeCategoryHeadingContent = () => {
     let topRightContainer = document.getElementById('topRightContainer')
     topRightContainer.textContent = '';
 }
+
 const displayCategoryHeading = (e) => {
     removeCategoryHeadingContent();
     let topRightContainer = document.getElementById('topRightContainer')
@@ -72,7 +76,19 @@ const displayCategoryHeading = (e) => {
     
 }
 
+const setActiveCategory = (e) => {
+    let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
+    displayedCategories.forEach(category => {
+        category.classList.remove('activeCat')
+    })
+    let selectedCatNum = e.target.id
+    let activeCat = displayedCategories[selectedCatNum]
+    activeCat.classList.add('activeCat')
+}
+
 addCategoryButton.addEventListener('click', createNewCategory)
 
-
+// give flex-box stretchy when selecting active
+// allow for actual task update category specific
+// take input and add it to the active category
 
