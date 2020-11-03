@@ -5,6 +5,7 @@ class toDoCategory {
     constructor(id, tasks){
         this.id = id;
         this.tasks = tasks;
+        this.active = false;
     }
 }
 
@@ -30,6 +31,9 @@ let categories = Array.from(document.getElementsByClassName('newCategory'))
 categories.forEach(category => {
     category.addEventListener('click', renderTasks)
 })
+categories.forEach(category => {
+    category.addEventListener('click', displayCategoryHeading)
+})
 }
 
 const renderTasks = (e) => {
@@ -40,6 +44,7 @@ const renderTasks = (e) => {
    
     selectedCatTasks.forEach(task => {
         let tasksDisplay = document.createElement('p');
+        tasksDisplay.setAttribute('class', 'tasksDisplay')
         tasksDisplay.textContent = task
         bottomRightContainer.appendChild(tasksDisplay)
     })
@@ -48,6 +53,23 @@ const renderTasks = (e) => {
 const removeTaskContent = () => {
     let bottomRightContainer = document.getElementById('bottomRightContainer')
     bottomRightContainer.textContent = '';
+}
+
+const removeCategoryHeadingContent = () => {
+    let topRightContainer = document.getElementById('topRightContainer')
+    topRightContainer.textContent = '';
+}
+const displayCategoryHeading = (e) => {
+    removeCategoryHeadingContent();
+    let topRightContainer = document.getElementById('topRightContainer')
+    let selectedCat = e.target.id
+
+
+    let categoryDisplay = document.createElement('h1')
+    categoryDisplay.textContent = categoryCollection[selectedCat].id
+    categoryDisplay.setAttribute('id', 'categoryHeading')
+    topRightContainer.appendChild(categoryDisplay);
+    
 }
 
 addCategoryButton.addEventListener('click', createNewCategory)
