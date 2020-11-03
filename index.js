@@ -91,4 +91,8 @@ addCategoryButton.addEventListener('click', createNewCategory)
 // give flex-box stretchy when selecting active
 // allow for actual task update category specific
 // take input and add it to the active category
+// delete functionality for categories
+// delete functionality for tasks
+// edit and update functionality for tasks - title, duedate, priority, notes, checklist
+
 
