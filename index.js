@@ -14,7 +14,7 @@ let counter = 0;
 
 const createNewCategory = () => {
     let newCatName = prompt('Name of your category');
-    let newCat = new toDoCategory(newCatName, [4,6,5])
+    let newCat = new toDoCategory(newCatName, [])
     categoryCollection.push(newCat)
     let bottomLeftContainer = document.getElementById('bottomLeftContainer')
     let newCategoryContainer = document.createElement('p')
@@ -55,7 +55,8 @@ const renderTasks = (e) => {
 
 const removeTaskContent = () => {
     let bottomRightContainer = document.getElementById('bottomRightContainer')
-    bottomRightContainer.textContent = '';
+    bottomRightContainer.innerHTML = '<input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off"></input>';
+
 }
 
 const removeCategoryHeadingContent = () => {
@@ -84,7 +85,24 @@ const setActiveCategory = (e) => {
     let selectedCatNum = e.target.id
     let activeCat = displayedCategories[selectedCatNum]
     activeCat.classList.add('activeCat')
+
+    categoryCollection.forEach(category => {
+        category.active = false
+    })
+    categoryCollection[selectedCatNum].active = true
 }
+
+const addTaskButton = document.getElementById('addTaskButton');
+
+const addTaskToCategory = (e) => {
+    e.preventDefault();
+    const newTaskInput = document.getElementById('taskInputField').value
+    
+}
+
+addTaskButton.addEventListener('click', addTaskToCategory)
+
+
 
 addCategoryButton.addEventListener('click', createNewCategory)
 
