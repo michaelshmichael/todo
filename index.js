@@ -30,8 +30,6 @@ const setListeners = () => {
 
     categories.forEach(category => {
         category.addEventListener('click', displayCategoryHeading)
-    })
-    categories.forEach(category => {
         category.addEventListener('click', setActiveCategory)
     })
 }
