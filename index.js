@@ -1,6 +1,5 @@
 const addCategoryButton = document.getElementById('addCategoryButton')
 
-
 class toDoCategory {
     constructor(id, tasks){
         this.id = id;
@@ -39,25 +38,12 @@ categories.forEach(category => {
 })
 }
 
-const renderTasks = (e) => {
-    removeTaskContent();
-    let bottomRightContainer = document.getElementById('bottomRightContainer')
-    let selectedCat = e.target.id;
-    let selectedCatTasks = categoryCollection[`${selectedCat}`].tasks
-   
-    selectedCatTasks.forEach(task => {
-        let tasksDisplay = document.createElement('p');
-        tasksDisplay.setAttribute('class', 'tasksDisplay')
-        tasksDisplay.textContent = task
-        bottomRightContainer.appendChild(tasksDisplay)
-    })
-}
 
-const removeTaskContent = () => {
-    let bottomRightContainer = document.getElementById('bottomRightContainer')
-    bottomRightContainer.innerHTML = '<input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off"></input>';
-
-}
+// THERE IS AN ISSUE HERE WHICH MEANS EACH TIME IT RELOADS THE INPUT FIELD BECOMES INERT
+// const removeTaskContent = () => {
+//     let bottomRightContainer = document.getElementById('bottomRightContainer')
+//     bottomRightContainer.innerHTML = '<input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off"></input><button id="addTaskButton">Add</button>';
+// }
 
 const removeCategoryHeadingContent = () => {
     let topRightContainer = document.getElementById('topRightContainer')
@@ -90,6 +76,7 @@ const setActiveCategory = (e) => {
         category.active = false
     })
     categoryCollection[selectedCatNum].active = true
+    renderTasks();
 }
 
 const addTaskButton = document.getElementById('addTaskButton');
@@ -97,8 +84,27 @@ const addTaskButton = document.getElementById('addTaskButton');
 const addTaskToCategory = (e) => {
     e.preventDefault();
     const newTaskInput = document.getElementById('taskInputField').value
-    
+    const activeCat = categoryCollection.find(element => element.active === true);
+    activeCat.tasks.push(newTaskInput)
+    renderTasks();
 }
+
+
+const renderTasks = () => {
+    document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
+    let activeCat = categoryCollection.find(element => element.active === true);
+    let activeCatTasks = activeCat.tasks
+    activeCatTasks.forEach(task => {
+        let tasksDisplay = document.createElement('p');
+        tasksDisplay.setAttribute('class', 'tasksDisplay')
+        tasksDisplay.textContent = task
+        bottomRightContainer.appendChild(tasksDisplay)
+    })
+}
+
+// const renderTasks = () => {
+
+// }
 
 addTaskButton.addEventListener('click', addTaskToCategory)
 
