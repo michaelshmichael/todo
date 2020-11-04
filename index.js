@@ -1,4 +1,10 @@
 const addCategoryButton = document.getElementById('addCategoryButton')
+const addTaskButton = document.getElementById('addTaskButton')
+let categoryCollection = []
+let counter = 0
+
+let bottomLeftContainer = document.getElementById('bottomLeftContainer')
+let topRightContainer = document.getElementById('topRightContainer')
 
 class toDoCategory {
     constructor(id, tasks){
@@ -8,17 +14,13 @@ class toDoCategory {
     }
 }
 
-let categoryCollection = [];
-let counter = 0;
-
 const createNewCategory = () => {
-    let newCatName = prompt('Name of your category');
-    let newCat = new toDoCategory(newCatName, [])
-    categoryCollection.push(newCat)
-    let bottomLeftContainer = document.getElementById('bottomLeftContainer')
+    let newCategoryName = prompt('Name of your category');
+    let newCategory = new toDoCategory(newCategoryName, [])
+    categoryCollection.push(newCategory)
     let newCategoryContainer = document.createElement('p')
     newCategoryContainer.classList.add('newCategory')
-    newCategoryContainer.textContent = newCat.id;
+    newCategoryContainer.textContent = newCategory.id;
     bottomLeftContainer.appendChild(newCategoryContainer)
     newCategoryContainer.setAttribute('id', `${counter}`)
     counter ++;
@@ -38,26 +40,15 @@ categories.forEach(category => {
 })
 }
 
-
-// THERE IS AN ISSUE HERE WHICH MEANS EACH TIME IT RELOADS THE INPUT FIELD BECOMES INERT
-// const removeTaskContent = () => {
-//     let bottomRightContainer = document.getElementById('bottomRightContainer')
-//     bottomRightContainer.innerHTML = '<input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off"></input><button id="addTaskButton">Add</button>';
-// }
-
 const removeCategoryHeadingContent = () => {
-    let topRightContainer = document.getElementById('topRightContainer')
     topRightContainer.textContent = '';
 }
 
 const displayCategoryHeading = (e) => {
     removeCategoryHeadingContent();
-    let topRightContainer = document.getElementById('topRightContainer')
-    let selectedCat = e.target.id
-
-
+    let selectedCategory = e.target.id
     let categoryDisplay = document.createElement('h1')
-    categoryDisplay.textContent = categoryCollection[selectedCat].id
+    categoryDisplay.textContent = categoryCollection[selectedCategory].id
     categoryDisplay.setAttribute('id', 'categoryHeading')
     topRightContainer.appendChild(categoryDisplay);
     
@@ -66,35 +57,34 @@ const displayCategoryHeading = (e) => {
 const setActiveCategory = (e) => {
     let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
     displayedCategories.forEach(category => {
-        category.classList.remove('activeCat')
+        category.classList.remove('activeCategory')
     })
-    let selectedCatNum = e.target.id
-    let activeCat = displayedCategories[selectedCatNum]
-    activeCat.classList.add('activeCat')
+    let selectedCategoryNum = e.target.id
+    let activeCategory = displayedCategories[selectedCategoryNum]
+    activeCategory.classList.add('activeCategory')
 
     categoryCollection.forEach(category => {
         category.active = false
     })
-    categoryCollection[selectedCatNum].active = true
+    categoryCollection[selectedCategoryNum].active = true
     renderTasks();
 }
 
-const addTaskButton = document.getElementById('addTaskButton');
+
 
 const addTaskToCategory = (e) => {
     e.preventDefault();
     const newTaskInput = document.getElementById('taskInputField').value
-    const activeCat = categoryCollection.find(element => element.active === true);
-    activeCat.tasks.push(newTaskInput)
+    const activeCategory = categoryCollection.find(element => element.active === true);
+    activeCategory.tasks.push(newTaskInput)
     renderTasks();
 }
 
-
 const renderTasks = () => {
     document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
-    let activeCat = categoryCollection.find(element => element.active === true);
-    let activeCatTasks = activeCat.tasks
-    activeCatTasks.forEach(task => {
+    let activeCategory = categoryCollection.find(element => element.active === true);
+    let activeCategoryTasks = activeCategory.tasks
+    activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('p');
         tasksDisplay.setAttribute('class', 'tasksDisplay')
         tasksDisplay.textContent = task
@@ -102,19 +92,10 @@ const renderTasks = () => {
     })
 }
 
-// const renderTasks = () => {
-
-// }
-
 addTaskButton.addEventListener('click', addTaskToCategory)
-
-
 
 addCategoryButton.addEventListener('click', createNewCategory)
 
-// give flex-box stretchy when selecting active
-// allow for actual task update category specific
-// take input and add it to the active category
 // delete functionality for categories
 // delete functionality for tasks
 // edit and update functionality for tasks - title, duedate, priority, notes, checklist
