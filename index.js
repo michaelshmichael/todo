@@ -15,22 +15,21 @@ const createNewCategory = () => {
     let newCategoryName = prompt('Name of your category')
     let newCategory = new toDoCategory(newCategoryName, [])
     categoryCollection.push(newCategory)
-    let newCategoryContainer = document.createElement('p')
-    newCategoryContainer.classList.add('newCategory')
-    newCategoryContainer.textContent = newCategory.id
-    bottomLeftContainer.appendChild(newCategoryContainer)
-    newCategoryContainer.setAttribute('id', `${counter}`)
-    counter ++
+    console.log(categoryCollection)
+    renderCategories()
     setListeners()
 }
 addCategoryButton.addEventListener('click', createNewCategory)
 
 const setListeners = () => {
     let categories = Array.from(document.getElementsByClassName('newCategory'))
-
+    let deleteCategoryButtons = Array.from(document.getElementsByClassName('deleteCategoryButton'))
     categories.forEach(category => {
         category.addEventListener('click', displayCategoryHeading)
         category.addEventListener('click', setActiveCategory)
+    })
+    deleteCategoryButtons.forEach(button => {
+        button.addEventListener('click', deleteCategory)
     })
 }
 
@@ -80,7 +79,48 @@ const renderTasks = () => {
     })
 }
 
+const deleteCategory = (e) => {
+    const index = e.target.dataset.index;
+    console.log(index)
+    // let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
+    // displayedCategories.splice(index, 1)
+    categoryCollection.splice(index, 1)
+    console.log(categoryCollection)
+    counter = 0
+    renderCategories()
+    
+}
+
+const renderCategories = () => {
+    bottomLeftCategoryContainer.textContent = ''
+    categoryCollection.forEach(category => {
+        let newCategoryContainer = document.createElement('p')
+        newCategoryContainer.classList.add('newCategory')
+        newCategoryContainer.textContent = category.id
+        bottomLeftCategoryContainer.appendChild(newCategoryContainer)
+        newCategoryContainer.setAttribute('id', `${counter}`)
+        newCategoryContainer.setAttribute('data-index', `${counter}`)
+
+        let deleteCategoryButton = document.createElement('div')
+        deleteCategoryButton.classList.add('deleteCategoryButton')
+        deleteCategoryButton.setAttribute('data-index', `${counter}`)
+        newCategoryContainer.appendChild(deleteCategoryButton)
+        counter ++
+    })
+    setListeners()
+}
+
+
+
 // delete functionality for categories
+    // make delete button appear when category is created
+    // add event listener to button which calls deleteCategory function
+    // deletes the whole container / deletes the button
+    // removes the category from categoryCollection
+    // re-render the categories - new function renderCategories
+
+
+
 // delete functionality for tasks
 // edit and update functionality for tasks - title, duedate, priority, notes, checklist
 
