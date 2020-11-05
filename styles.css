@@ -93,6 +93,13 @@
     margin-left: 40px;
 }
 
+.deleteTaskButton {
+    float: right;
+    width: 40px;
+    height: 38px;
+    background-color: pink;
+}
+
 #categoryHeading {
     margin-left: 40px;
 }

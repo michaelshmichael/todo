@@ -21,9 +21,30 @@ const createNewCategory = () => {
 }
 addCategoryButton.addEventListener('click', createNewCategory)
 
+const renderCategories = () => {
+    bottomLeftCategoryContainer.textContent = ''
+    categoryCollection.forEach(category => {
+        let newCategoryContainer = document.createElement('p')
+        newCategoryContainer.classList.add('newCategory')
+        newCategoryContainer.textContent = category.id
+        bottomLeftCategoryContainer.appendChild(newCategoryContainer)
+        newCategoryContainer.setAttribute('id', `${counter}`)
+        newCategoryContainer.setAttribute('data-index', `${counter}`)
+
+        let deleteCategoryButton = document.createElement('div')
+        deleteCategoryButton.classList.add('deleteCategoryButton')
+        deleteCategoryButton.setAttribute('data-index', `${counter}`)
+        newCategoryContainer.appendChild(deleteCategoryButton)
+        counter ++
+    })
+    counter = 0
+    setListeners()
+}
+
 const setListeners = () => {
     let categories = Array.from(document.getElementsByClassName('newCategory'))
     let deleteCategoryButtons = Array.from(document.getElementsByClassName('deleteCategoryButton'))
+    let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
     categories.forEach(category => {
         category.addEventListener('click', displayCategoryHeading)
         category.addEventListener('click', setActiveCategory)
@@ -31,6 +52,10 @@ const setListeners = () => {
     deleteCategoryButtons.forEach(button => {
         button.addEventListener('click', deleteCategory)
     })
+    deleteTaskButtons.forEach(button => {
+        button.addEventListener('click', deleteTask)
+    })
+
 }
 
 const displayCategoryHeading = (e) => {
@@ -76,52 +101,31 @@ const renderTasks = () => {
         tasksDisplay.setAttribute('class', 'tasksDisplay')
         tasksDisplay.textContent = task
         bottomRightContainer.appendChild(tasksDisplay)
-    })
-}
 
-const deleteCategory = (e) => {
-    const index = e.target.dataset.index;
-    console.log(index)
-    // let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
-    // displayedCategories.splice(index, 1)
-    categoryCollection.splice(index, 1)
-    console.log(categoryCollection)
-    counter = 0
-    renderCategories()
-    
-}
-
-const renderCategories = () => {
-    bottomLeftCategoryContainer.textContent = ''
-    categoryCollection.forEach(category => {
-        let newCategoryContainer = document.createElement('p')
-        newCategoryContainer.classList.add('newCategory')
-        newCategoryContainer.textContent = category.id
-        bottomLeftCategoryContainer.appendChild(newCategoryContainer)
-        newCategoryContainer.setAttribute('id', `${counter}`)
-        newCategoryContainer.setAttribute('data-index', `${counter}`)
-
-        let deleteCategoryButton = document.createElement('div')
-        deleteCategoryButton.classList.add('deleteCategoryButton')
-        deleteCategoryButton.setAttribute('data-index', `${counter}`)
-        newCategoryContainer.appendChild(deleteCategoryButton)
-        counter ++
+        let deleteTaskButton = document.createElement('div')
+        deleteTaskButton.setAttribute('class', 'deleteTaskButton')
+        //GIVE DATA VALUE TO DELETE BUTTON
+        tasksDisplay.appendChild(deleteTaskButton)
     })
     setListeners()
 }
 
+const deleteCategory = (e) => {
+    if (confirm("Delete Category?") == true) {    
+        document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
+        const index = e.target.dataset.index;
+        categoryCollection.splice(index, 1)
+        renderCategories()
+    } 
+}
 
+//MAKE DELETE TASK FUNCTION
+const deleteTask = () => {
+    //Give task data index
+    //Match the data index to the index in the task array
+    //Remove task from array and re-render the tasks
+}
 
-// delete functionality for categories
-    // make delete button appear when category is created
-    // add event listener to button which calls deleteCategory function
-    // deletes the whole container / deletes the button
-    // removes the category from categoryCollection
-    // re-render the categories - new function renderCategories
-
-
-
-// delete functionality for tasks
 // edit and update functionality for tasks - title, duedate, priority, notes, checklist
 
 
