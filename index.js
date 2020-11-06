@@ -11,6 +11,16 @@ class toDoCategory {
     }
 }
 
+class task {
+    constructor(id, dueDate, priority, checklist, notes){
+        this.id = id;
+        this.dueDate = dueDate;
+        this.priority = priority;
+        this.checklist = checklist;
+        this.notes = notes;
+    }
+}
+
 const createNewCategory = () => {
     let newCategoryName = prompt('Name of your category')
     let newCategory = new toDoCategory(newCategoryName, [])
@@ -87,8 +97,11 @@ const addTaskToCategory = (e) => {
     e.preventDefault();
     const newTaskInput = document.getElementById('taskInputField').value
     const activeCategory = categoryCollection.find(element => element.active === true);
-    activeCategory.tasks.push(newTaskInput)
+
+    let newTask = new task (newTaskInput, 'dueDate', 'priority', 'checklist', 'notes')
+    activeCategory.tasks.push(newTask)
     renderTasks();
+    console.log(categoryCollection)
 }
 addTaskButton.addEventListener('click', addTaskToCategory)
 
@@ -99,7 +112,7 @@ const renderTasks = () => {
     activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('p');
         tasksDisplay.setAttribute('class', 'tasksDisplay')
-        tasksDisplay.textContent = task
+        tasksDisplay.textContent = task.id
         bottomRightContainer.appendChild(tasksDisplay)
 
         let deleteTaskButton = document.createElement('div')
@@ -112,7 +125,7 @@ const renderTasks = () => {
 
 const deleteCategory = (e) => {
     if (confirm("Delete Category?") == true) {    
-        document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
+        document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
         const index = e.target.dataset.index;
         categoryCollection.splice(index, 1)
         renderCategories()
