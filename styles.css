@@ -103,3 +103,76 @@
 #categoryHeading {
     margin-left: 40px;
 }
+
+.inputTable {
+    display: none;
+}
+
+#inputTableContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 800px;
+    height: 400px;
+    top: 100px;
+    left: 240px;
+    z-index: -1;
+}
+
+.inputTableActive {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 800px;
+    left: auto;
+    right: auto;
+    font-family: 'Peddana', serif;
+    font-size: 1.3em;
+    text-align: center;
+    background-color:#71fcab;
+    border: 10px solid rgb(199, 253, 253);
+    padding: 14px;
+    animation: fadeIn 0.4s linear 1 forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: scale(0.1)}
+    100% { opacity: 1; transform: scale(1)}
+}
+#dueDate {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#priority {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+#prioritySelectors {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#formButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#mainFormInfo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#notes {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

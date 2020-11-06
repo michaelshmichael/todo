@@ -1,5 +1,7 @@
 const addCategoryButton = document.getElementById('addCategoryButton')
 const addTaskButton = document.getElementById('addTaskButton')
+const submitButton = document.getElementById('submitButton')
+
 let categoryCollection = []
 let counter = 0
 
@@ -16,7 +18,7 @@ class task {
         this.id = id;
         this.dueDate = dueDate;
         this.priority = priority;
-        this.checklist = checklist;
+        this.checklist = false;
         this.notes = notes;
     }
 }
@@ -31,6 +33,7 @@ const createNewCategory = () => {
 }
 addCategoryButton.addEventListener('click', createNewCategory)
 
+//Renders All Categories 
 const renderCategories = () => {
     bottomLeftCategoryContainer.textContent = ''
     categoryCollection.forEach(category => {
@@ -54,7 +57,7 @@ const renderCategories = () => {
 const setListeners = () => {
     let categories = Array.from(document.getElementsByClassName('newCategory'))
     let deleteCategoryButtons = Array.from(document.getElementsByClassName('deleteCategoryButton'))
-    let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
+    //let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
     categories.forEach(category => {
         category.addEventListener('click', displayCategoryHeading)
         category.addEventListener('click', setActiveCategory)
@@ -62,12 +65,13 @@ const setListeners = () => {
     deleteCategoryButtons.forEach(button => {
         button.addEventListener('click', deleteCategory)
     })
-    deleteTaskButtons.forEach(button => {
-        button.addEventListener('click', deleteTask)
-    })
+    // deleteTaskButtons.forEach(button => {
+    //     button.addEventListener('click', deleteTask)
+    // })
 
 }
 
+// Puts Active Category Name In The Header Box
 const displayCategoryHeading = (e) => {
     topRightContainer.textContent = '';
     let selectedCategory = e.target.id
@@ -77,6 +81,7 @@ const displayCategoryHeading = (e) => {
     topRightContainer.appendChild(categoryDisplay);
 }
 
+//Makes Active Category When Clicked - And Displays Its Tasks
 const setActiveCategory = (e) => {
     let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
     displayedCategories.forEach(category => {
@@ -93,18 +98,34 @@ const setActiveCategory = (e) => {
     renderTasks();
 }
 
-const addTaskToCategory = (e) => {
+//Displays Input Form When 'Add' Button Clicked- Takes Title of From from Text Input
+const displayTaskInputForm = (e) => {
     e.preventDefault();
+    let taskTitleForm = document.getElementById('taskTitleForm')
+    let inputTable = document.querySelector('.inputTable')
+    inputTable.classList.remove('inputTable')
+    inputTable.classList.add('inputTableActive')
     const newTaskInput = document.getElementById('taskInputField').value
-    const activeCategory = categoryCollection.find(element => element.active === true);
-
-    let newTask = new task (newTaskInput, 'dueDate', 'priority', 'checklist', 'notes')
-    activeCategory.tasks.push(newTask)
-    renderTasks();
-    console.log(categoryCollection)
+    taskTitleForm.textContent = newTaskInput   
 }
-addTaskButton.addEventListener('click', addTaskToCategory)
+addTaskButton.addEventListener('click', displayTaskInputForm)
 
+//Takes Data from Form and Adds It To Task and Puts Task into Category
+const addTaskDataToCategory = () => {
+    let taskID = documnet.getElementById('taskTitleForm').textContent
+    let dueDateValue = document.getElementById('dueDate').value
+    let priorityValue = document.getElementById('priority').value
+    let notesValue = document.getElementById('notes').value
+
+    //const activeCategory = categoryCollection.find(element => element.active === true);
+    let newTask = new task (newTaskInput, dueDateValue, priorityValue, 'checklist', notesValue)
+    //activeCategory.tasks.push(newTask)
+    //renderTasks();
+    console.log(newTask)
+}
+submitButton.addEventListener('click', addTaskDataToCategory)
+
+//Renders All Tasks of Active Category
 const renderTasks = () => {
     document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
     let activeCategory = categoryCollection.find(element => element.active === true);
@@ -123,7 +144,9 @@ const renderTasks = () => {
     setListeners()
 }
 
+//Deletes Category When Delete Button Clicked
 const deleteCategory = (e) => {
+    console.log('deleted')
     if (confirm("Delete Category?") == true) {    
         document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
         const index = e.target.dataset.index;
@@ -133,12 +156,10 @@ const deleteCategory = (e) => {
 }
 
 //MAKE DELETE TASK FUNCTION
-const deleteTask = () => {
+//const deleteTask = (e) => {
     //Give task data index
     //Match the data index to the index in the task array
     //Remove task from array and re-render the tasks
-}
-
-// edit and update functionality for tasks - title, duedate, priority, notes, checklist
+//}
 
 

@@ -24,15 +24,42 @@
             </div>
         </div>
         <div id="bottomRightContainer">
-          <form>
           <input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off">
-            <button id="addTaskButton">Add
-            </button>
-          </form>
-
-          
+            <button id="addTaskButton">Add</button>
         </div>
     </div>
+  </div>
+  <div id="inputTableContainer">
+    <form class = "inputTable">
+      <h1 id="taskTitleForm"></h1>
+      <div id="mainFormInfo">
+      <div id="dueDate">
+      <label>Due Date</label>
+        <input type = "date" name = "title" id = "dueDate">
+      </div>
+      <div id="priority">
+      <label>Priority</label>
+      <div id="prioritySelectors">
+        <fieldset>
+      <label for="high">High</label>
+        <input type = "radio" name = "priority" id = "high">
+      <label for="medium">Medium</label>
+        <input type = "radio" name = "priority" id = "medium">
+      <label for="low">Low</label>
+        <input type = "radio" name = "priority" id = "low">
+      </fieldset>
+      </div>
+      </div>
+      <div id="notes">
+      <label>Notes</label>
+        <textarea id= "notes" name="textarea" style="width:250px;height:150px;"></textarea>
+      </div>
+      </div>
+      <div id="formButtons">
+      <button id = "submitButton">Submit</button>
+      <button id = "cancelButton">Cancel</button>
+    </div>
+    </form>
   </div>
     <script src="index.js"></script>
   </body>
