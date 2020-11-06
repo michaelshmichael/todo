@@ -1,6 +1,8 @@
 const addCategoryButton = document.getElementById('addCategoryButton')
 const addTaskButton = document.getElementById('addTaskButton')
 const submitButton = document.getElementById('submitButton')
+let inputTable = document.querySelector('.inputTable')
+let inputTableContainer = document.getElementById('inputTableContainer')
 
 let categoryCollection = []
 let counter = 0
@@ -102,7 +104,7 @@ const setActiveCategory = (e) => {
 const displayTaskInputForm = (e) => {
     e.preventDefault();
     let taskTitleForm = document.getElementById('taskTitleForm')
-    let inputTable = document.querySelector('.inputTable')
+    
     inputTable.classList.remove('inputTable')
     inputTable.classList.add('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainerActive')
@@ -127,13 +129,14 @@ const addTaskDataToCategory = () => {
     let notesValue = document.getElementById('notes').value
     let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
     
+    //This could be decoupled
     const activeCategory = categoryCollection.find(element => element.active === true);
-    
     activeCategory.tasks.push(newTask)
+    inputTable.classList.remove('inputTableActive')
+    inputTableContainer.setAttribute('id', 'inputTableContainer')
     // renderCategories()
-    // renderTasks()
-    console.log(categoryCollection)
-    console.log(newTask)
+    renderTasks()
+
 }
 submitButton.addEventListener('click', addTaskDataToCategory)
 
