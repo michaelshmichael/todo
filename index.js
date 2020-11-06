@@ -148,7 +148,9 @@ const renderTasks = () => {
     activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('p');
         tasksDisplay.setAttribute('class', 'tasksDisplay')
-        tasksDisplay.textContent = task.id
+        //PUT IN TASK DETAILS HERE :)
+        tasksDisplay.textContent = `${task.id} ${task.dueDate}` 
+        
         bottomRightContainer.appendChild(tasksDisplay)
 
         let deleteTaskButton = document.createElement('div')
@@ -168,6 +170,15 @@ const deleteCategory = (e) => {
         renderCategories()
     } 
 }
+
+
+//MAKE DISPLAY TASK MORE DETAILED
+    ////Create flexbox for each task entry
+    //Display due date
+    //Display priority level (colour)
+    //Display notes when clicked
+    //Provide checkbox
+    //Give delete button
 
 //MAKE DELETE TASK FUNCTION
 //const deleteTask = (e) => {
