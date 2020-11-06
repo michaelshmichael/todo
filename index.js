@@ -105,22 +105,26 @@ const displayTaskInputForm = (e) => {
     let inputTable = document.querySelector('.inputTable')
     inputTable.classList.remove('inputTable')
     inputTable.classList.add('inputTableActive')
+    inputTableContainer.setAttribute('id', 'inputTableContainerActive')
     const newTaskInput = document.getElementById('taskInputField').value
     taskTitleForm.textContent = newTaskInput   
 }
 addTaskButton.addEventListener('click', displayTaskInputForm)
 
 //Takes Data from Form and Adds It To Task and Puts Task into Category
-const addTaskDataToCategory = () => {
-    let taskID = documnet.getElementById('taskTitleForm').textContent
+const addTaskDataToCategory = (e) => {
+    e.preventDefault()
+    let taskID = document.getElementById('taskInputField').value
     let dueDateValue = document.getElementById('dueDate').value
     let priorityValue = document.getElementById('priority').value
     let notesValue = document.getElementById('notes').value
-
-    //const activeCategory = categoryCollection.find(element => element.active === true);
-    let newTask = new task (newTaskInput, dueDateValue, priorityValue, 'checklist', notesValue)
-    //activeCategory.tasks.push(newTask)
-    //renderTasks();
+    let newTask = new task (taskID, dueDateValue, priorityValue, 'checklist', notesValue)
+    
+    const activeCategory = categoryCollection.find(element => element.active === true);
+    
+    activeCategory.tasks.push(newTask)
+    // renderCategories()
+    // renderTasks()
     console.log(newTask)
 }
 submitButton.addEventListener('click', addTaskDataToCategory)
@@ -146,7 +150,6 @@ const renderTasks = () => {
 
 //Deletes Category When Delete Button Clicked
 const deleteCategory = (e) => {
-    console.log('deleted')
     if (confirm("Delete Category?") == true) {    
         document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
         const index = e.target.dataset.index;
