@@ -109,7 +109,7 @@ const displayTaskInputForm = (e) => {
     inputTable.classList.add('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainerActive')
     const newTaskInput = document.getElementById('taskInputField').value
-    taskTitleForm.textContent = newTaskInput   
+    taskTitleForm.textContent = `Details For ${newTaskInput}`   
 }
 addTaskButton.addEventListener('click', displayTaskInputForm)
 
@@ -149,7 +149,7 @@ const renderTasks = () => {
         let tasksDisplay = document.createElement('p');
         tasksDisplay.setAttribute('class', 'tasksDisplay')
         //PUT IN TASK DETAILS HERE :)
-        tasksDisplay.textContent = `${task.id} ${task.dueDate}` 
+        tasksDisplay.textContent = `${task.id} ${task.dueDate} ${task.notes} ${task.priority}` 
         
         bottomRightContainer.appendChild(tasksDisplay)
 

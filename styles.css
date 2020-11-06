@@ -124,7 +124,7 @@
     flex-direction: row;
     justify-content: space-evenly;
     width: 800px;
-    height: 400px;
+    height: 300px;
     top: 100px;
     left: 240px;
 }
@@ -140,11 +140,11 @@
     width: 800px;
     left: auto;
     right: auto;
-    font-family: 'Peddana', serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 1.3em;
     text-align: center;
-    background-color:#71fcab;
-    border: 10px solid rgb(199, 253, 253);
+    background-color:#395dff;
+    border: 10px solid rgb(0, 49, 156);
     padding: 14px;
     animation: fadeIn 0.4s linear 1 forwards;
     z-index: +1;
@@ -189,4 +189,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+#taskTitleForm {
+    height: 50px;
 }
