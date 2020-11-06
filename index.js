@@ -112,19 +112,27 @@ const displayTaskInputForm = (e) => {
 addTaskButton.addEventListener('click', displayTaskInputForm)
 
 //Takes Data from Form and Adds It To Task and Puts Task into Category
-const addTaskDataToCategory = (e) => {
-    e.preventDefault()
+const addTaskDataToCategory = () => {
+    
     let taskID = document.getElementById('taskInputField').value
     let dueDateValue = document.getElementById('dueDate').value
-    let priorityValue = document.getElementById('priority').value
+    let priorityValue
+    if (document.getElementById('highPriority').checked) {
+        priorityValue = 'High'
+      } else if (document.getElementById('mediumPriority').checked) {
+        priorityValue = 'Medium'
+      } else if (document.getElementById('lowPriority').checked){
+          priorityValue = 'Low'
+      }
     let notesValue = document.getElementById('notes').value
-    let newTask = new task (taskID, dueDateValue, priorityValue, 'checklist', notesValue)
+    let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
     
     const activeCategory = categoryCollection.find(element => element.active === true);
     
     activeCategory.tasks.push(newTask)
     // renderCategories()
     // renderTasks()
+    console.log(categoryCollection)
     console.log(newTask)
 }
 submitButton.addEventListener('click', addTaskDataToCategory)
