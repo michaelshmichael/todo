@@ -50,6 +50,7 @@ const renderCategories = () => {
         let deleteCategoryButton = document.createElement('div')
         deleteCategoryButton.classList.add('deleteCategoryButton')
         deleteCategoryButton.setAttribute('data-index', `${counter}`)
+        deleteCategoryButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
         newCategoryContainer.appendChild(deleteCategoryButton)
         counter ++
     })
@@ -168,6 +169,7 @@ const renderTasks = () => {
         let deleteTaskButton = document.createElement('div')
         deleteTaskButton.setAttribute('class', 'deleteTaskButton')
         deleteTaskButton.setAttribute('data-index', `${counter}`)
+        deleteTaskButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
         tasksDisplay.appendChild(deleteTaskButton)
         counter ++
     })
