@@ -4,6 +4,7 @@
     <title>Dolores</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css" integrity="sha512-OD0ScwZAE5PCg4nATXnm8pdWi0Uk0Pp2XFsFz1xbZ7xcXvapzjvcxxHPeTZKfMjvlwwl4sGOvgJghWF2GRZZDw==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
   <body>
@@ -25,8 +26,10 @@
             </div>
         </div>
         <div id="bottomRightContainer">
-          <input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off">
-            <button id="addTaskButton">Add</button>
+          <div id="taskInputAndButton">
+            <input id="taskInputField" type="text" placeholder="Add task here..." autocomplete="off">
+            <button id="addTaskButton" class="ui violet button">Add</button>
+          </div>
         </div>
     </div>
   </div>
@@ -57,8 +60,8 @@
         </div>
       </div>
           <div id="formButtons">
-          <button id = "submitButton">Submit</button>
-          <button id = "cancelButton">Cancel</button>
+            <button id="submitButton" class="ui green button">Confirm</button>
+            <button id="cancelButton" class="ui orange button">Cancel</button>
           </div>
     </div>
   </div>

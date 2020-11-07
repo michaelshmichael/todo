@@ -62,7 +62,8 @@
     margin-left: 30px;
     margin-top: 15px;
     width: 600px;
-    height: 25px;
+    height: 30px;
+    font-family: 'Poppins', sans-serif;
 }
 
 .newCategory {
@@ -78,6 +79,7 @@
     margin-top: 3px;
     width: 20px;
     height: 20px;
+    background-color: red;
     
 }
 
@@ -98,6 +100,7 @@
     margin-top: 3px;
     width: 20px;
     height: 20px;
+    background-color: red;
 }
 
 #categoryHeading {
@@ -178,6 +181,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
+    margin-top: 25px;
 }
 
 #mainFormInfo {
@@ -203,7 +207,7 @@
     margin-top: 6px;
     margin-right: 5px;
     border-radius: 50px;
-    background-color: rgb(255, 166, 0)
+    background-color: rgb(255, 55, 20)
 }
 
 
@@ -214,7 +218,7 @@
     margin-top: 6px;
     margin-right: 5px;
     border-radius: 50px;
-    background-color: rgb(149, 35, 255)
+    background-color: rgb(250, 253, 60)
 }
 
 
@@ -225,5 +229,24 @@
     margin-top: 6px;
     margin-right: 5px;
     border-radius: 50px;
-    background-color: rgb(182, 253, 89)
+    background-color: rgb(30, 209, 209)
+}
+
+.fa-trash {
+    color: green;
+}
+
+#taskInputAndButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+#addTaskButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 15px;
+    height: 30px;
 }

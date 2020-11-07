@@ -27,11 +27,15 @@ class task {
 
 const createNewCategory = () => {
     let newCategoryName = prompt('Name of your category')
-    let newCategory = new toDoCategory(newCategoryName, [])
-    categoryCollection.push(newCategory)
-    console.log(categoryCollection)
-    renderCategories()
-    setListeners()
+    if (newCategoryName === "") {
+        alert('Please Enter a Value')
+    } else if (newCategoryName) {
+        let newCategory = new toDoCategory(newCategoryName, [])
+        categoryCollection.push(newCategory)
+        console.log(categoryCollection)
+        renderCategories()
+        setListeners()
+    } 
 }
 addCategoryButton.addEventListener('click', createNewCategory)
 
@@ -47,10 +51,10 @@ const renderCategories = () => {
         newCategoryContainer.setAttribute('id', `${counter}`)
         newCategoryContainer.setAttribute('data-index', `${counter}`)
 
-        let deleteCategoryButton = document.createElement('div')
+        let deleteCategoryButton = document.createElement('span')
         deleteCategoryButton.classList.add('deleteCategoryButton')
         deleteCategoryButton.setAttribute('data-index', `${counter}`)
-        deleteCategoryButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
+        //deleteCategoryButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
         newCategoryContainer.appendChild(deleteCategoryButton)
         counter ++
     })
@@ -104,16 +108,30 @@ const setActiveCategory = (e) => {
 
 //Displays Input Form When 'Add' Button Clicked- Takes Title of From from Text Input
 const displayTaskInputForm = (e) => {
+    const newTaskInput = document.getElementById('taskInputField').value
     e.preventDefault();
+    if(newTaskInput === ''){
+        alert('Please Enter a Value')
+    } else if (newTaskInput){
     let taskTitleForm = document.getElementById('taskTitleForm')
-    
     inputTable.classList.remove('inputTable')
     inputTable.classList.add('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainerActive')
-    const newTaskInput = document.getElementById('taskInputField').value
-    taskTitleForm.textContent = `Details For ${newTaskInput}`   
+    taskTitleForm.textContent = `Details For ${newTaskInput}` 
+    }  
 }
+
+// const checkActiveCategory = () => {
+//     if(topRightContainer.textContent === ''){
+//         alert('Please Select Category')
+//     } else {
+//         displayTaskInputForm
+//     }
+// }
+
 addTaskButton.addEventListener('click', displayTaskInputForm)
+   
+
 
 //Takes Data from Form and Adds It To Task and Puts Task into Category
 const addTaskDataToCategory = () => {
@@ -136,11 +154,15 @@ const addTaskDataToCategory = () => {
     activeCategory.tasks.push(newTask)
     inputTable.classList.remove('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainer')
-    // renderCategories()
     renderTasks()
 
+    
 }
+
+
+
 submitButton.addEventListener('click', addTaskDataToCategory)
+
 
 //Renders All Tasks of Active Category
 const renderTasks = () => {
@@ -169,40 +191,35 @@ const renderTasks = () => {
         let deleteTaskButton = document.createElement('div')
         deleteTaskButton.setAttribute('class', 'deleteTaskButton')
         deleteTaskButton.setAttribute('data-index', `${counter}`)
-        deleteTaskButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
+        //deleteTaskButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
         tasksDisplay.appendChild(deleteTaskButton)
         counter ++
     })
     counter = 0
     setListeners()
+
 }
 
 //Deletes Category When Delete Button Clicked
 const deleteCategory = (e) => {
-    if (confirm("Delete Category?") == true) {    
+    if (confirm("Delete Category?") == true) {  
+        console.log('delete button clicked')  
         document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
         const index = e.target.dataset.index;
+        console.log(index)
         categoryCollection.splice(index, 1)
         renderCategories()
     } 
 }
 
-
-//MAKE DISPLAY TASK MORE DETAILED
-    ////Create flexbox for each task entry
-    //Display notes when clicked
-    //Provide checkbox
-    //Give delete button
-
 //MAKE DELETE TASK FUNCTION
-const deleteTask = (e) => {
-    const activeCategory = categoryCollection.find(element => element.active === true);
+const deleteTask = (e) => { 
     if (confirm("Delete Task?") == true) { 
-        let index = e.target.dataset.index
+        const activeCategory = categoryCollection.find(element => element.active === true);
+        console.log("Active cat =" + activeCategory)
+        const index = e.target.dataset.index
+        console.log("index = " + index)
         activeCategory.tasks.splice(index, 1)
         renderTasks()
     }
 }
-
-
-
