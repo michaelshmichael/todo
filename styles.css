@@ -154,6 +154,7 @@
     0% { opacity: 0; transform: scale(0.1)}
     100% { opacity: 1; transform: scale(1)}
 }
+
 #dueDateContainer {
     width: 150px;
     display: flex;
@@ -193,4 +194,36 @@
 
 #taskTitleForm {
     height: 50px;
+}
+
+.highPriorityIndicator {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 6px;
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: rgb(255, 166, 0)
+}
+
+
+.mediumPriorityIndicator {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 6px;
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: rgb(149, 35, 255)
+}
+
+
+.lowPriorityIndicator {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 6px;
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: rgb(182, 253, 89)
 }

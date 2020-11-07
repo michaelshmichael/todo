@@ -148,15 +148,26 @@ const renderTasks = () => {
     activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('p');
         tasksDisplay.setAttribute('class', 'tasksDisplay')
-        //PUT IN TASK DETAILS HERE :)
-        tasksDisplay.textContent = `${task.id} ${task.dueDate} ${task.notes} ${task.priority}` 
         
+        tasksDisplay.textContent = `${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
         bottomRightContainer.appendChild(tasksDisplay)
+        console.log(`${task.priority}`)
+        let priorityIndicator = document.createElement('div')
+            if(task.priority == "High"){
+                priorityIndicator.classList.add('highPriorityIndicator')
+            } else if (task.priority == "Medium"){
+                priorityIndicator.classList.add('mediumPriorityIndicator')
+            } else if (task.priority == "Low"){
+                priorityIndicator.classList.add('lowPriorityIndicator')
+            }
+            tasksDisplay.appendChild(priorityIndicator)
 
         let deleteTaskButton = document.createElement('div')
         deleteTaskButton.setAttribute('class', 'deleteTaskButton')
-        //GIVE DATA VALUE TO DELETE BUTTON
+        
         tasksDisplay.appendChild(deleteTaskButton)
+        
+        
     })
     setListeners()
 }
