@@ -1,8 +1,10 @@
 const addCategoryButton = document.getElementById('addCategoryButton')
 const addTaskButton = document.getElementById('addTaskButton')
 const submitButton = document.getElementById('submitButton')
+const cancelInputButton = document.getElementById('cancelButton')
 let inputTable = document.querySelector('.inputTable')
 let inputTableContainer = document.getElementById('inputTableContainer')
+
 
 let categoryCollection = []
 
@@ -159,8 +161,6 @@ const addTaskDataToCategory = () => {
     
 }
 
-
-
 submitButton.addEventListener('click', addTaskDataToCategory)
 
 
@@ -223,3 +223,9 @@ const deleteTask = (e) => {
         renderTasks()
     }
 }
+
+cancelInputButton.addEventListener('click', () =>{
+    inputTable.classList.remove('inputTableActive')
+    inputTable.classList.add('inputTable')
+    inputTableContainer.setAttribute('id', 'inputTableContainer')
+})
