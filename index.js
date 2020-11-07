@@ -5,7 +5,7 @@ let inputTable = document.querySelector('.inputTable')
 let inputTableContainer = document.getElementById('inputTableContainer')
 
 let categoryCollection = []
-let counter = 0
+
 
 class toDoCategory {
     constructor(id, tasks){
@@ -37,6 +37,7 @@ addCategoryButton.addEventListener('click', createNewCategory)
 
 //Renders All Categories 
 const renderCategories = () => {
+    let counter = 0
     bottomLeftCategoryContainer.textContent = ''
     categoryCollection.forEach(category => {
         let newCategoryContainer = document.createElement('p')
@@ -59,7 +60,7 @@ const renderCategories = () => {
 const setListeners = () => {
     let categories = Array.from(document.getElementsByClassName('newCategory'))
     let deleteCategoryButtons = Array.from(document.getElementsByClassName('deleteCategoryButton'))
-    //let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
+    let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
     categories.forEach(category => {
         category.addEventListener('click', displayCategoryHeading)
         category.addEventListener('click', setActiveCategory)
@@ -67,9 +68,9 @@ const setListeners = () => {
     deleteCategoryButtons.forEach(button => {
         button.addEventListener('click', deleteCategory)
     })
-    // deleteTaskButtons.forEach(button => {
-    //     button.addEventListener('click', deleteTask)
-    // })
+    deleteTaskButtons.forEach(button => {
+        button.addEventListener('click', deleteTask)
+    })
 
 }
 
@@ -142,10 +143,12 @@ submitButton.addEventListener('click', addTaskDataToCategory)
 
 //Renders All Tasks of Active Category
 const renderTasks = () => {
+    let counter = 0
     document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
     let activeCategory = categoryCollection.find(element => element.active === true);
     let activeCategoryTasks = activeCategory.tasks
     activeCategoryTasks.forEach(task => {
+
         let tasksDisplay = document.createElement('p');
         tasksDisplay.setAttribute('class', 'tasksDisplay')
         
@@ -164,11 +167,11 @@ const renderTasks = () => {
 
         let deleteTaskButton = document.createElement('div')
         deleteTaskButton.setAttribute('class', 'deleteTaskButton')
-        
+        deleteTaskButton.setAttribute('data-index', `${counter}`)
         tasksDisplay.appendChild(deleteTaskButton)
-        
-        
+        counter ++
     })
+    counter = 0
     setListeners()
 }
 
@@ -185,17 +188,19 @@ const deleteCategory = (e) => {
 
 //MAKE DISPLAY TASK MORE DETAILED
     ////Create flexbox for each task entry
-    //Display due date
-    //Display priority level (colour)
     //Display notes when clicked
     //Provide checkbox
     //Give delete button
 
 //MAKE DELETE TASK FUNCTION
-//const deleteTask = (e) => {
-    //Give task data index
-    //Match the data index to the index in the task array
-    //Remove task from array and re-render the tasks
-//}
+const deleteTask = (e) => {
+    const activeCategory = categoryCollection.find(element => element.active === true);
+    if (confirm("Delete Task?") == true) { 
+        let index = e.target.dataset.index
+        activeCategory.tasks.splice(index, 1)
+        renderTasks()
+    }
+}
+
 
 
