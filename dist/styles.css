@@ -51,6 +51,7 @@
     height: 450px;
     background-color: green;
     border-radius: 0 0 0 15px;
+    overflow: auto;
 }
 
 #addCategoryButton {
@@ -92,6 +93,7 @@
     height: 450px;
     background-color: rgb(0, 182, 0);
     border-radius: 0 0 50px 0;
+    overflow: auto;
 }
 
 #taskInputField {
@@ -120,6 +122,7 @@
 
 .tasksDisplay {
     margin-left: 40px;
+    font-weight: 500;
 }
 
 .highPriorityIndicator {
@@ -259,6 +262,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     font-family: 'Poppins', sans-serif;
+    resize: none;
 }
 
 

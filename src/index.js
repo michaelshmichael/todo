@@ -188,7 +188,7 @@ const Tasks = (() => {
         activeCategoryTasks.forEach(task => {
             let tasksDisplay = document.createElement('p');
             tasksDisplay.setAttribute('class', 'tasksDisplay')
-            tasksDisplay.textContent = `${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
+            tasksDisplay.textContent = `Task Name: ${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
             bottomRightContainer.appendChild(tasksDisplay)
             console.log(`${task.priority}`)
             let priorityIndicator = document.createElement('div')
