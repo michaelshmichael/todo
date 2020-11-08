@@ -1,4 +1,5 @@
 let categoryCollection = []
+
 const Category = (() => {
 
     class toDoCategory {
@@ -25,7 +26,7 @@ const Category = (() => {
     setCategoryListeners()
 
     function createNewCategory() {
-        let newCategoryName = prompt('Name of your category')
+        let newCategoryName = prompt('Write the name of your category')
         if (newCategoryName === "") {
             alert('Please Enter a Value')
         } else if (newCategoryName) {
@@ -34,6 +35,7 @@ const Category = (() => {
             renderCategories()
             setCategoryListeners()
         }
+        makeAllCategoriesInactive()
     }
     
     function displayCategoryHeading(e) {
@@ -75,11 +77,15 @@ const Category = (() => {
         let activeCategory = displayedCategories[selectedCategoryNum]
         activeCategory.classList.add('activeCategory')
 
+        makeAllCategoriesInactive()
+        categoryCollection[selectedCategoryNum].active = true
+        Tasks.renderTasks();
+    }
+
+    function makeAllCategoriesInactive(){
         categoryCollection.forEach(category => {
             category.active = false
         })
-        categoryCollection[selectedCategoryNum].active = true
-        Tasks.renderTasks();
     }
 
     function identifyActiveCategory(){
@@ -118,10 +124,9 @@ const Tasks = (() => {
     }
 
     function addTaskListeners(){
-        if(categoryCollection.length > 0){
-            //SHOULD HAVE CHECK FOR ACTIVE CATEGORY
+        //if(categoryCollection.length > 0){
             addTaskButton.addEventListener('click', displayTaskInputForm)
-        }
+        //}
         submitButton.addEventListener('click', setNewTaskValues)
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
@@ -138,7 +143,9 @@ const Tasks = (() => {
     function displayTaskInputForm(e){
         const newTaskInput = document.getElementById('taskInputField').value
         e.preventDefault();
-        if(newTaskInput === ''){
+        if (Category.identifyActiveCategory() === undefined){
+            alert('Please Select a Category')
+        } else if(newTaskInput === ''){
             alert('Please Enter a Value')
         } else if (newTaskInput){
         let taskTitleForm = document.getElementById('taskTitleForm')
@@ -216,15 +223,6 @@ const Tasks = (() => {
     return {renderTasks}
 })()
 
-
-
-    // const checkActiveCategory = () => {
-    //     if(topRightContainer.textContent === ''){
-    //         alert('Please Select Category')
-    //     } else {
-    //         displayTaskInputForm
-    //     }
-    // }
 
     
     
