@@ -1,3 +1,5 @@
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*TOP CONTAINER AND BOTTOM LEFT*/
 #mainContainer {
     display: flex;
     flex-direction: column;
@@ -33,6 +35,10 @@
     border-radius: 0 15px 0 0;
 }
 
+#categoryHeading {
+    margin-left: 40px;
+}
+
 #bottomContainer {
     display: flex;
     flex-direction: row;
@@ -50,21 +56,6 @@
 #addCategoryButton {
     margin-left: 20px;
     cursor: pointer;
-}
-
-#bottomRightContainer {
-    width: 700px;
-    height: 450px;
-    background-color: rgb(0, 182, 0);
-    border-radius: 0 0 50px 0;
-}
-
-#taskInputField {
-    margin-left: 30px;
-    margin-top: 15px;
-    width: 600px;
-    height: 30px;
-    font-family: 'Poppins', sans-serif;
 }
 
 .newCategory {
@@ -92,8 +83,73 @@
     cursor: pointer;
 }
 
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*TASK DISPLAY / BOTTOM RIGHT CONTAINER*/
+#bottomRightContainer {
+    width: 700px;
+    height: 450px;
+    background-color: rgb(0, 182, 0);
+    border-radius: 0 0 50px 0;
+}
+
+#taskInputField {
+    margin-left: 30px;
+    margin-top: 15px;
+    width: 600px;
+    height: 30px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#taskInputAndButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#addTaskButton {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 15px 15px 0 15px;
+    height: 30px;
+}
+
 .tasksDisplay {
     margin-left: 40px;
+}
+
+.highPriorityIndicator {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 6px;
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: rgb(255, 55, 20)
+}
+
+.mediumPriorityIndicator {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 6px;
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: rgb(250, 253, 60)
+}
+
+.lowPriorityIndicator {
+    float: left;
+    height: 10px;
+    width: 10px;
+    margin-top: 6px;
+    margin-right: 5px;
+    border-radius: 50px;
+    background-color: rgb(30, 209, 209)
 }
 
 .deleteTaskButton {
@@ -104,12 +160,15 @@
     background-color: red;
 }
 
-#categoryHeading {
-    margin-left: 40px;
+.fa-trash {
+    float: right;
+    margin-right: 10px;
+    margin-top: 4px;
+    color: rgb(255, 255, 255);
 }
 
-
-
+/*//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*INPUT FORM*/
 #inputTableContainer {
     position: absolute;
     display: flex;
@@ -159,6 +218,10 @@
     100% { opacity: 1; transform: scale(1)}
 }
 
+#taskTitleForm {
+    height: 50px;
+}
+
 #dueDateContainer {
     width: 150px;
     display: flex;
@@ -198,61 +261,5 @@
     font-family: 'Poppins', sans-serif;
 }
 
-#taskTitleForm {
-    height: 50px;
-}
-
-.highPriorityIndicator {
-    float: left;
-    height: 10px;
-    width: 10px;
-    margin-top: 6px;
-    margin-right: 5px;
-    border-radius: 50px;
-    background-color: rgb(255, 55, 20)
-}
 
 
-.mediumPriorityIndicator {
-    float: left;
-    height: 10px;
-    width: 10px;
-    margin-top: 6px;
-    margin-right: 5px;
-    border-radius: 50px;
-    background-color: rgb(250, 253, 60)
-}
-
-
-.lowPriorityIndicator {
-    float: left;
-    height: 10px;
-    width: 10px;
-    margin-top: 6px;
-    margin-right: 5px;
-    border-radius: 50px;
-    background-color: rgb(30, 209, 209)
-}
-
-.fa-trash {
-    float: right;
-    margin-right: 10px;
-    margin-top: 4px;
-    color: rgb(255, 255, 255);
-}
-
-#taskInputAndButton {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-#addTaskButton {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin: 15px 15px 0 15px;
-    height: 30px;
-}
