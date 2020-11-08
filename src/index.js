@@ -13,13 +13,12 @@ const Category = (() => {
     function setCategoryListeners(){
         const addCategoryButton = document.getElementById('addCategoryButton')
         let categories = Array.from(document.getElementsByClassName('newCategory'))
-        let deleteCategoryButtons = Array.from(document.getElementsByClassName('deleteCategoryButton'))
-        
+        let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
         categories.forEach(category => {
             category.addEventListener('click', displayCategoryHeading)
             category.addEventListener('click', setActiveCategory)
         })
-        deleteCategoryButtons.forEach(button => {
+        deleteCategoryIcons.forEach(button => {
             button.addEventListener('click', deleteCategory)
         })
         addCategoryButton.addEventListener('click', createNewCategory)
@@ -58,8 +57,8 @@ const Category = (() => {
             newCategoryContainer.setAttribute('id', `${counter}`)
             newCategoryContainer.setAttribute('data-index', `${counter}`)
 
-            let deleteCategoryButton = document.createElement('div')
-            deleteCategoryButton.classList.add('deleteCategoryButton')
+            let deleteCategoryButton = document.createElement('i')
+            deleteCategoryButton.setAttribute('class', 'fa fa-trash deleteCategoryIcon')
             deleteCategoryButton.setAttribute('data-index', `${counter}`)
             newCategoryContainer.appendChild(deleteCategoryButton)
             counter ++
@@ -115,9 +114,9 @@ const Tasks = (() => {
     function addTaskListeners(){
         addTaskButton.addEventListener('click', displayTaskInputForm)
         submitButton.addEventListener('click', setNewTaskValues)
-        let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
-        deleteTaskButtons.forEach(button => {
-            button.addEventListener('click', deleteTask)
+        let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
+        deleteTaskIcons.forEach(button => {
+                button.addEventListener('click', deleteTask)
         })
         cancelInputButton.addEventListener('click', () =>{
             inputTable.classList.remove('inputTableActive')
@@ -141,7 +140,6 @@ const Tasks = (() => {
         }  
     }
     
-    //Takes Data from Form and Adds It To Task and Puts Task into Category
     function setNewTaskValues() {
         let taskID = document.getElementById('taskInputField').value
         let dueDateValue = document.getElementById('dueDate').value
@@ -163,7 +161,6 @@ const Tasks = (() => {
         inputTableContainer.setAttribute('id', 'inputTableContainer')
         renderTasks()
     }
-    
 
     function renderTasks() {
         let counter = 0
@@ -188,16 +185,14 @@ const Tasks = (() => {
                 }
                 tasksDisplay.appendChild(priorityIndicator)
 
-            let deleteTaskButton = document.createElement('div')
-            deleteTaskButton.setAttribute('class', 'deleteTaskButton')
+            let deleteTaskButton = document.createElement('i')
+            deleteTaskButton.setAttribute('class', 'fa fa-trash deleteTaskIcon')
             deleteTaskButton.setAttribute('data-index', `${counter}`)
-            //deleteTaskButton.innerHTML = "<i class=\"fa fa-trash\"></i>"
             tasksDisplay.appendChild(deleteTaskButton)
             counter ++
         })
         counter = 0
         addTaskListeners()
-
     }
    
     function deleteTask(e) { 

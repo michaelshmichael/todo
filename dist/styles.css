@@ -234,7 +234,10 @@
 }
 
 .fa-trash {
-    color: green;
+    float: right;
+    margin-right: 10px;
+    margin-top: 4px;
+    color: rgb(255, 143, 15);
 }
 
 #taskInputAndButton {
