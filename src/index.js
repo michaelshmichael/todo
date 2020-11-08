@@ -102,7 +102,6 @@ const Tasks = (() => {
     const inputTable = document.querySelector('.inputTable')
     const inputTableContainer = document.getElementById('inputTableContainer')
 
-
     class task {
         constructor(id, dueDate, priority, checklist, notes){
             this.id = id;
@@ -112,6 +111,21 @@ const Tasks = (() => {
             this.notes = notes;
         }
     }
+
+    function addTaskListeners(){
+        addTaskButton.addEventListener('click', displayTaskInputForm)
+        submitButton.addEventListener('click', setNewTaskValues)
+        let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
+        deleteTaskButtons.forEach(button => {
+            button.addEventListener('click', deleteTask)
+        })
+        cancelInputButton.addEventListener('click', () =>{
+            inputTable.classList.remove('inputTableActive')
+            inputTable.classList.add('inputTable')
+            inputTableContainer.setAttribute('id', 'inputTableContainer')
+        })
+    }
+    addTaskListeners()
 
     function displayTaskInputForm(e){
         const newTaskInput = document.getElementById('taskInputField').value
@@ -126,8 +140,7 @@ const Tasks = (() => {
         taskTitleForm.textContent = `Details For ${newTaskInput}` 
         }  
     }
-    addTaskButton.addEventListener('click', displayTaskInputForm)
-
+    
     //Takes Data from Form and Adds It To Task and Puts Task into Category
     function setNewTaskValues() {
         let taskID = document.getElementById('taskInputField').value
@@ -150,7 +163,7 @@ const Tasks = (() => {
         inputTableContainer.setAttribute('id', 'inputTableContainer')
         renderTasks()
     }
-    submitButton.addEventListener('click', setNewTaskValues)
+    
 
     function renderTasks() {
         let counter = 0
@@ -183,16 +196,8 @@ const Tasks = (() => {
             counter ++
         })
         counter = 0
-        setTaskListeners()
+        addTaskListeners()
 
-    }
-
-    //CAN PUT MORE LISTENERS IN HERE
-    function setTaskListeners() {
-        let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
-        deleteTaskButtons.forEach(button => {
-            button.addEventListener('click', deleteTask)
-        })
     }
    
     function deleteTask(e) { 
@@ -203,12 +208,6 @@ const Tasks = (() => {
             renderTasks()
         }
     }
-
-    cancelInputButton.addEventListener('click', () =>{
-        inputTable.classList.remove('inputTableActive')
-        inputTable.classList.add('inputTable')
-        inputTableContainer.setAttribute('id', 'inputTableContainer')
-    })
 
     return {renderTasks}
 })()
