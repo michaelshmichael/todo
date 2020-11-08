@@ -1,16 +1,6 @@
-const application = (() => {
-
-    function _cacheDom(){
-        this.addCategoryButton = document.getElementById('addCategoryButton')
-        this.addTaskButton = document.getElementById('addTaskButton')
-        this.submitButton = document.getElementById('submitButton')
-        this.cancelInputButton = document.getElementById('cancelButton')
-        this.inputTable = document.querySelector('.inputTable')
-        this.inputTableContainer = document.getElementById('inputTableContainer')
-    }
-    _cacheDom()
-
-    let categoryCollection = []
+let categoryCollection = []
+  
+const Category = (() => {
 
     class toDoCategory {
         constructor(id, tasks){
@@ -20,42 +10,11 @@ const application = (() => {
         }
     }
 
-    class task {
-        constructor(id, dueDate, priority, checklist, notes){
-            this.id = id;
-            this.dueDate = dueDate;
-            this.priority = priority;
-            this.checklist = false;
-            this.notes = notes;
-        }
-    }
-
-    const createNewCategory = () => {
-        let newCategoryName = prompt('Name of your category')
-        if (newCategoryName === "") {
-            alert('Please Enter a Value')
-        } else if (newCategoryName) {
-            let newCategory = new toDoCategory(newCategoryName, [])
-            categoryCollection.push(newCategory)
-            renderCategories()
-            setListeners()
-        } 
-    }
-    addCategoryButton.addEventListener('click', createNewCategory)
-
-    const displayCategoryHeading = (e) => {
-        topRightContainer.textContent = '';
-        let selectedCategory = e.target.id
-        let categoryDisplay = document.createElement('h1')
-        categoryDisplay.textContent = categoryCollection[selectedCategory].id
-        categoryDisplay.setAttribute('id', 'categoryHeading')
-        topRightContainer.appendChild(categoryDisplay);
-    }
-
-    const setListeners = () => {
+    function setCategoryListeners(){
+        const addCategoryButton = document.getElementById('addCategoryButton')
         let categories = Array.from(document.getElementsByClassName('newCategory'))
         let deleteCategoryButtons = Array.from(document.getElementsByClassName('deleteCategoryButton'))
-        let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
+        
         categories.forEach(category => {
             category.addEventListener('click', displayCategoryHeading)
             category.addEventListener('click', setActiveCategory)
@@ -63,10 +22,29 @@ const application = (() => {
         deleteCategoryButtons.forEach(button => {
             button.addEventListener('click', deleteCategory)
         })
-        deleteTaskButtons.forEach(button => {
-            button.addEventListener('click', deleteTask)
-        })
+        addCategoryButton.addEventListener('click', createNewCategory)
+    }
+    setCategoryListeners()
 
+    function createNewCategory() {
+        let newCategoryName = prompt('Name of your category')
+        if (newCategoryName === "") {
+            alert('Please Enter a Value')
+        } else if (newCategoryName) {
+            let newCategory = new toDoCategory(newCategoryName, [])
+            categoryCollection.push(newCategory)
+            renderCategories()
+            setCategoryListeners()
+        } 
+    }
+    
+    function displayCategoryHeading(e) {
+        topRightContainer.textContent = '';
+        let selectedCategory = e.target.id
+        let categoryDisplay = document.createElement('h1')
+        categoryDisplay.textContent = categoryCollection[selectedCategory].id
+        categoryDisplay.setAttribute('id', 'categoryHeading')
+        topRightContainer.appendChild(categoryDisplay);
     }
 
     function renderCategories() {
@@ -87,11 +65,10 @@ const application = (() => {
             counter ++
         })
         counter = 0
-        setListeners()
+        setCategoryListeners()
     }
 
-    //Makes Active Category When Clicked - And Displays Its Tasks
-    const setActiveCategory = (e) => {
+    function setActiveCategory(e){
         let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
         displayedCategories.forEach(category => {
             category.classList.remove('activeCategory')
@@ -104,11 +81,39 @@ const application = (() => {
             category.active = false
         })
         categoryCollection[selectedCategoryNum].active = true
-        renderTasks();
+        Tasks.renderTasks();
     }
 
-    //Displays Input Form When 'Add' Button Clicked- Takes Title of From from Text Input
-    const displayTaskInputForm = (e) => {
+    function deleteCategory(e) {
+        if (confirm("Delete Category?") == true) {   
+            document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
+            const index = e.target.dataset.index;
+            categoryCollection.splice(index, 1)
+            renderCategories()
+        } 
+    }
+})()
+
+const Tasks = (() => {
+
+    const addTaskButton = document.getElementById('addTaskButton')
+    const submitButton = document.getElementById('submitButton')
+    const cancelInputButton = document.getElementById('cancelButton')
+    const inputTable = document.querySelector('.inputTable')
+    const inputTableContainer = document.getElementById('inputTableContainer')
+
+
+    class task {
+        constructor(id, dueDate, priority, checklist, notes){
+            this.id = id;
+            this.dueDate = dueDate;
+            this.priority = priority;
+            this.checklist = false;
+            this.notes = notes;
+        }
+    }
+
+    function displayTaskInputForm(e){
         const newTaskInput = document.getElementById('taskInputField').value
         e.preventDefault();
         if(newTaskInput === ''){
@@ -121,22 +126,10 @@ const application = (() => {
         taskTitleForm.textContent = `Details For ${newTaskInput}` 
         }  
     }
-
-    // const checkActiveCategory = () => {
-    //     if(topRightContainer.textContent === ''){
-    //         alert('Please Select Category')
-    //     } else {
-    //         displayTaskInputForm
-    //     }
-    // }
-
     addTaskButton.addEventListener('click', displayTaskInputForm)
-    
-
 
     //Takes Data from Form and Adds It To Task and Puts Task into Category
-    const setNewTaskValues = () => {
-        
+    function setNewTaskValues() {
         let taskID = document.getElementById('taskInputField').value
         let dueDateValue = document.getElementById('dueDate').value
         let priorityValue
@@ -157,12 +150,9 @@ const application = (() => {
         inputTableContainer.setAttribute('id', 'inputTableContainer')
         renderTasks()
     }
-
     submitButton.addEventListener('click', setNewTaskValues)
 
-
-    //Renders All Tasks of Active Category
-    const renderTasks = () => {
+    function renderTasks() {
         let counter = 0
         document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
         let activeCategory = categoryCollection.find(element => element.active === true);
@@ -193,24 +183,19 @@ const application = (() => {
             counter ++
         })
         counter = 0
-        setListeners()
+        setTaskListeners()
 
     }
 
-    //Deletes Category When Delete Button Clicked
-    const deleteCategory = (e) => {
-        if (confirm("Delete Category?") == true) {  
-            console.log('delete button clicked')  
-            document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
-            const index = e.target.dataset.index;
-            console.log(index)
-            categoryCollection.splice(index, 1)
-            renderCategories()
-        } 
+    //CAN PUT MORE LISTENERS IN HERE
+    function setTaskListeners() {
+        let deleteTaskButtons = Array.from(document.getElementsByClassName('deleteTaskButton'))
+        deleteTaskButtons.forEach(button => {
+            button.addEventListener('click', deleteTask)
+        })
     }
-
-    //MAKE DELETE TASK FUNCTION
-    const deleteTask = (e) => { 
+   
+    function deleteTask(e) { 
         if (confirm("Delete Task?") == true) { 
             const activeCategory = categoryCollection.find(element => element.active === true);
             const index = e.target.dataset.index
@@ -224,5 +209,30 @@ const application = (() => {
         inputTable.classList.add('inputTable')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
     })
-})();
+
+    return {renderTasks}
+})()
+
+
+
+    // const checkActiveCategory = () => {
+    //     if(topRightContainer.textContent === ''){
+    //         alert('Please Select Category')
+    //     } else {
+    //         displayTaskInputForm
+    //     }
+    // }
+
+    
+    
+
+
+    
+
+
+    
+    
+
+
+
 
