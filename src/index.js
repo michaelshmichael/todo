@@ -1,5 +1,4 @@
 let categoryCollection = []
-  
 const Category = (() => {
 
     class toDoCategory {
@@ -34,7 +33,7 @@ const Category = (() => {
             categoryCollection.push(newCategory)
             renderCategories()
             setCategoryListeners()
-        } 
+        }
     }
     
     function displayCategoryHeading(e) {
@@ -83,6 +82,11 @@ const Category = (() => {
         Tasks.renderTasks();
     }
 
+    function identifyActiveCategory(){
+        let activeCategory = categoryCollection.find(element => element.active === true);
+        return activeCategory
+    }
+
     function deleteCategory(e) {
         if (confirm("Delete Category?") == true) {   
             document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
@@ -91,6 +95,8 @@ const Category = (() => {
             renderCategories()
         } 
     }
+
+    return{identifyActiveCategory}
 })()
 
 const Tasks = (() => {
@@ -112,7 +118,10 @@ const Tasks = (() => {
     }
 
     function addTaskListeners(){
-        addTaskButton.addEventListener('click', displayTaskInputForm)
+        if(categoryCollection.length > 0){
+            //SHOULD HAVE CHECK FOR ACTIVE CATEGORY
+            addTaskButton.addEventListener('click', displayTaskInputForm)
+        }
         submitButton.addEventListener('click', setNewTaskValues)
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
@@ -153,10 +162,12 @@ const Tasks = (() => {
         }
         let notesValue = document.getElementById('notes').value
         let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
-        
-        //This could be decoupled - Need to keep the newTask variable
-        const activeCategory = categoryCollection.find(element => element.active === true);
-        activeCategory.tasks.push(newTask)
+    
+        addTaskToActiveCategory(newTask)
+    }
+
+    function addTaskToActiveCategory(newTask) {
+        Category.identifyActiveCategory().tasks.push(newTask)
         inputTable.classList.remove('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
         renderTasks()
@@ -168,10 +179,8 @@ const Tasks = (() => {
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.forEach(task => {
-
             let tasksDisplay = document.createElement('p');
             tasksDisplay.setAttribute('class', 'tasksDisplay')
-            
             tasksDisplay.textContent = `${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
             bottomRightContainer.appendChild(tasksDisplay)
             console.log(`${task.priority}`)
