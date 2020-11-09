@@ -45,7 +45,6 @@ const Category = (() => {
             localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         }
         makeAllCategoriesInactive()
-        
     }
     
     function displayCategoryHeading(e) {
@@ -99,6 +98,7 @@ const Category = (() => {
             category.active = false
         })
     }
+    makeAllCategoriesInactive()
 
     function identifyActiveCategory(){
         let activeCategory = categoryCollection.find(element => element.active === true);
@@ -117,6 +117,7 @@ const Category = (() => {
 
     return{identifyActiveCategory}
 })()
+
 
 const Tasks = (() => {
 
@@ -141,6 +142,7 @@ const Tasks = (() => {
     function addTaskListeners(){
         addTaskButton.addEventListener('click', displayTaskInputForm)
         submitButton.addEventListener('click', setNewTaskValues)
+        
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
                 button.addEventListener('click', deleteTask)
@@ -181,14 +183,17 @@ const Tasks = (() => {
             priorityValue = 2
         } else if (document.getElementById('lowPriority').checked){
             priorityValue = 3
+        } else {
+            alert('Please Select a Priority Level')
+            setNewTaskValues()
         }
         let notesValue = document.getElementById('notes').value
         let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
-    
         addTaskToActiveCategory(newTask)
     }
 
     function addTaskToActiveCategory(newTask) {
+        //if(newTask.priorityValue == 1 || 2 || 3){
         Category.identifyActiveCategory().tasks.push(newTask)
         inputTable.classList.remove('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
