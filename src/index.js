@@ -1,4 +1,12 @@
-let categoryCollection = []
+let categoryCollection
+if (localStorage.getItem('categoryCollection')) {
+  categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+} else {
+  categoryCollection = []
+}
+
+localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
 const Category = (() => {
 
@@ -34,8 +42,10 @@ const Category = (() => {
             categoryCollection.push(newCategory)
             renderCategories()
             setCategoryListeners()
+            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         }
         makeAllCategoriesInactive()
+        
     }
     
     function displayCategoryHeading(e) {
@@ -67,6 +77,7 @@ const Category = (() => {
         counter = 0
         setCategoryListeners()
     }
+    renderCategories(data)
 
     function setActiveCategory(e){
         let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
@@ -79,6 +90,7 @@ const Category = (() => {
 
         makeAllCategoriesInactive()
         categoryCollection[selectedCategoryNum].active = true
+        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         Tasks.renderTasks();
     }
 
@@ -98,6 +110,7 @@ const Category = (() => {
             document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
             const index = e.target.dataset.index;
             categoryCollection.splice(index, 1)
+            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
             renderCategories()
         } 
     }
@@ -177,6 +190,7 @@ const Tasks = (() => {
         Category.identifyActiveCategory().tasks.push(newTask)
         inputTable.classList.remove('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
+        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         renderTasks()
     }
 
@@ -210,12 +224,14 @@ const Tasks = (() => {
         counter = 0
         addTaskListeners()
     }
+    renderTasks()
    
     function deleteTask(e) { 
         if (confirm("Delete Task?") == true) { 
             const activeCategory = categoryCollection.find(element => element.active === true);
             const index = e.target.dataset.index
             activeCategory.tasks.splice(index, 1)
+            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
             renderTasks()
         }
     }
