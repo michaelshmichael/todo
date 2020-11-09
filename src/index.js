@@ -8,6 +8,7 @@ if (localStorage.getItem('categoryCollection')) {
 localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
 let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
+let orderingButtonsActive = true
 
 const Category = (() => {
 
@@ -92,7 +93,9 @@ const Category = (() => {
         makeAllCategoriesInactive()
         categoryCollection[selectedCategoryNum].active = true
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+        orderingButtonsActive = true;
         Tasks.renderTasks();
+        
     }
 
     function makeAllCategoriesInactive(){
@@ -127,7 +130,8 @@ const Tasks = (() => {
     const inputTable = document.querySelector('.inputTable')
     const inputTableContainer = document.getElementById('inputTableContainer')
     const importanceButton = document.getElementById('importanceButton')
-
+    const dateButton = document.getElementById('dateButton')
+    
     class task {
         constructor(id, dueDate, priority, checklist, notes){
             this.id = id;
@@ -152,7 +156,10 @@ const Tasks = (() => {
             inputTable.classList.add('inputTable')
             inputTableContainer.setAttribute('id', 'inputTableContainer')
         })
-        importanceButton.addEventListener('click', orderTasksByImportance)
+        if(orderingButtonsActive == true){
+            importanceButton.addEventListener('click', orderTasksByImportance)
+            dateButton.addEventListener('click', orderTasksByDate)
+        }
     }
     addTaskListeners()
 
@@ -177,11 +184,11 @@ const Tasks = (() => {
         let dueDateValue = document.getElementById('dueDate').value
         let priorityValue
         if (document.getElementById('highPriority').checked) {
-            priorityValue = 'High'
+            priorityValue = 1
         } else if (document.getElementById('mediumPriority').checked) {
-            priorityValue = 'Medium'
+            priorityValue = 2
         } else if (document.getElementById('lowPriority').checked){
-            priorityValue = 'Low'
+            priorityValue = 3
         }
         let notesValue = document.getElementById('notes').value
         let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
@@ -211,11 +218,11 @@ const Tasks = (() => {
             
             let priorityIndicator = document.createElement('div')
 
-                if(task.priority == "High"){
+                if(task.priority == 1){
                     priorityIndicator.classList.add('highPriorityIndicator')
-                } else if (task.priority == "Medium"){
+                } else if (task.priority == 2){
                     priorityIndicator.classList.add('mediumPriorityIndicator')
-                } else if (task.priority == "Low"){
+                } else if (task.priority == 3){
                     priorityIndicator.classList.add('lowPriorityIndicator')
                 }
 
@@ -260,21 +267,44 @@ const Tasks = (() => {
     }
 
     function orderTasksByImportance() {
+        console.log('order by importance')
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.sort(function(a,b){
             if(a.priority > b.priority) {
                 return 1
-            } else {
+            } else if(a.priority < b.priority) {
                 return -1
+            } else {
+                return 0
             }
         })
+        orderingButtonsActive = false
+        importanceButton.removeEventListener('click', orderTasksByImportance)
+        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
+        renderTasks()  
+    }
+   
+    
+    function orderTasksByDate() {
+        console.log('order by date')
+        let activeCategory = categoryCollection.find(element => element.active === true);
+        let activeCategoryTasks = activeCategory.tasks
+        activeCategoryTasks.sort(function(a,b){
+            if(a.dueDate > b.dueDate) {
+                return 1
+            } else if(a.dueDate < b.dueDate) {
+                return -1
+            } else {
+                return 0
+            }
+        })
+        orderingButtonsActive = false
+        dateButton.removeEventListener('click', orderTasksByDate)
+        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         renderTasks()
     }
-
-    // function renderTasksByDate() {
-
-    // }
+    
    
     function deleteTask(e) { 
         if (confirm("Delete Task?") == true) { 
