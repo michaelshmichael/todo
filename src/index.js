@@ -126,6 +126,7 @@ const Tasks = (() => {
     const cancelInputButton = document.getElementById('cancelButton')
     const inputTable = document.querySelector('.inputTable')
     const inputTableContainer = document.getElementById('inputTableContainer')
+    const importanceButton = document.getElementById('importanceButton')
 
     class task {
         constructor(id, dueDate, priority, checklist, notes){
@@ -151,6 +152,7 @@ const Tasks = (() => {
             inputTable.classList.add('inputTable')
             inputTableContainer.setAttribute('id', 'inputTableContainer')
         })
+        importanceButton.addEventListener('click', orderTasksByImportance)
     }
     addTaskListeners()
 
@@ -198,7 +200,6 @@ const Tasks = (() => {
     function renderTasks() {
         let counter = 0
         document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
-        //can grab this from other object
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.forEach(task => {
@@ -206,7 +207,6 @@ const Tasks = (() => {
             tasksDisplay.setAttribute('class', 'tasksDisplay')
             let taskInfoContainer = document.createElement('div')
             taskInfoContainer.setAttribute('class', 'taskInfoContainer')
-            //tasksDisplay.textContent = `Task Name: ${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
             bottomRightContainer.appendChild(tasksDisplay)
             
             let priorityIndicator = document.createElement('div')
@@ -258,6 +258,23 @@ const Tasks = (() => {
         counter = 0
         addTaskListeners()
     }
+
+    function orderTasksByImportance() {
+        let activeCategory = categoryCollection.find(element => element.active === true);
+        let activeCategoryTasks = activeCategory.tasks
+        activeCategoryTasks.sort(function(a,b){
+            if(a.priority > b.priority) {
+                return 1
+            } else {
+                return -1
+            }
+        })
+        renderTasks()
+    }
+
+    // function renderTasksByDate() {
+
+    // }
    
     function deleteTask(e) { 
         if (confirm("Delete Task?") == true) { 
