@@ -8,6 +8,7 @@ if (localStorage.getItem('categoryCollection')) {
 localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
 let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
+
 const Category = (() => {
 
     class toDoCategory {
@@ -104,7 +105,7 @@ const Category = (() => {
         let activeCategory = categoryCollection.find(element => element.active === true);
         return activeCategory
     }
-
+    
     function deleteCategory(e) {
         if (confirm("Delete Category?") == true) {   
             document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
@@ -197,6 +198,7 @@ const Tasks = (() => {
     function renderTasks() {
         let counter = 0
         document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
+        //can grab this from other object
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.forEach(task => {
@@ -226,10 +228,10 @@ const Tasks = (() => {
 
             let dueDate = document.createElement('div')
             dueDate.setAttribute('class', 'dueDate')
-            dueDate.textContent = `${task.dueDate}`
+            dueDate.textContent = `Due: ${task.dueDate}`
 
             let notesContainer = document.createElement('div')
-            notesContainer.setAttribute('class', 'notes')
+            notesContainer.setAttribute('class', 'notesContainer')
 
             let notesHeading = document.createElement('div')
             notesHeading.setAttribute('class', 'notesHeading')
@@ -256,7 +258,6 @@ const Tasks = (() => {
         counter = 0
         addTaskListeners()
     }
-    renderTasks()
    
     function deleteTask(e) { 
         if (confirm("Delete Task?") == true) { 

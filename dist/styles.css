@@ -121,6 +121,14 @@
     height: 30px;
 }
 
+#orderingButtons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 0 15px 0 15px;
+}
+
 .tasksDisplay {
     display: flex;
     flex-direction: row;
@@ -128,29 +136,31 @@
     align-items: center;
     margin-left: 40px;
     font-weight: 500;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
+    margin-top: 20px;
     height: 120px;
     width: 600px;
+    background-color: rgb(1, 153, 1)
 }
 
 .highPriorityIndicator {
-    height: 15px;
+    height: 100px;
     width: 15px;
-    border-radius: 50px;
+    margin-left: 10px;
     background-color: rgb(255, 55, 20)
 }
 
 .mediumPriorityIndicator {
-    height: 15px;
+    height: 100px;
     width: 15px;
-    border-radius: 50px;
+    margin-left: 10px;
     background-color: rgb(250, 253, 60)
 }
 
 .lowPriorityIndicator {
-    height: 15px;
+    height: 100px;
     width: 15px;
-    border-radius: 50px;
+    margin-left: 10px;
     background-color: rgb(30, 209, 209)
 }
 
@@ -169,14 +179,19 @@
     justify-content: space-between;
     width: 200px;
     height: 90px;
+    background-color: rgb(129, 182, 50)
 }
 
 .taskName {
+    padding-left: 10px;
+    padding-top: 5px;
     height: 60px;
     width: 200px;
+    overflow: auto;
 }
 
 .dueDate {
+    padding-left: 10px;
     height: 30px;
     width: 200px;
 }
@@ -186,18 +201,25 @@
     flex-direction: column;
     justify-content: space-between;
     height: 90px;
-    width: 300px;
-}
+    width: 280px;
+    background-color: rgb(0, 112, 187);
+}   
 
 .notesHeading {
-    height: 20px;
-    width: 300px;
+    height: 30px;
+    width: 280px;
     font-weight: 500;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 
 .notesContent {
     height: 70px;
-    width: 300px;
+    width: 270px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    overflow: auto;
 }
 
 
