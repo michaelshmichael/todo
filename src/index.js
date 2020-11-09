@@ -262,15 +262,10 @@ const Tasks = (() => {
         console.log('order by importance')
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
-        activeCategoryTasks.sort(function(a,b){
-            if(a.priority > b.priority) {
-                return 1
-            } else if(a.priority < b.priority) {
-                return -1
-            } else {
-                return 0
-            }
+        activeCategoryTasks.sort(function(a,b){ 
+            return a.priority > b.priority ? 1 : a.priority < b.priority ? -1 : 0;
         })
+    
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
         renderTasks()  
     }
@@ -281,13 +276,7 @@ const Tasks = (() => {
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.sort(function(a,b){
-            if(a.dueDate > b.dueDate) {
-                return 1
-            } else if(a.dueDate < b.dueDate) {
-                return -1
-            } else {
-                return 0
-            }
+            return a.dueDate > b.dueDate ? 1 : a.dueDate < b.dueDate ? -1 : 0;
         })
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         renderTasks()
