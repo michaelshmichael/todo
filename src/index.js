@@ -8,8 +8,6 @@ if (localStorage.getItem('categoryCollection')) {
 localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
 let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
-let orderingButtonsActive = true
-
 const Category = (() => {
 
     class toDoCategory {
@@ -93,9 +91,7 @@ const Category = (() => {
         makeAllCategoriesInactive()
         categoryCollection[selectedCategoryNum].active = true
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-        orderingButtonsActive = true;
-        Tasks.renderTasks();
-        
+        Tasks.renderTasks(); 
     }
 
     function makeAllCategoriesInactive(){
@@ -143,9 +139,7 @@ const Tasks = (() => {
     }
 
     function addTaskListeners(){
-        //if(categoryCollection.length > 0){
-            addTaskButton.addEventListener('click', displayTaskInputForm)
-        //}
+        addTaskButton.addEventListener('click', displayTaskInputForm)
         submitButton.addEventListener('click', setNewTaskValues)
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
@@ -156,10 +150,8 @@ const Tasks = (() => {
             inputTable.classList.add('inputTable')
             inputTableContainer.setAttribute('id', 'inputTableContainer')
         })
-        if(orderingButtonsActive == true){
-            importanceButton.addEventListener('click', orderTasksByImportance)
-            dateButton.addEventListener('click', orderTasksByDate)
-        }
+        importanceButton.addEventListener('click', orderTasksByImportance)
+        dateButton.addEventListener('click', orderTasksByDate)
     }
     addTaskListeners()
 
@@ -279,8 +271,6 @@ const Tasks = (() => {
                 return 0
             }
         })
-        orderingButtonsActive = false
-        importanceButton.removeEventListener('click', orderTasksByImportance)
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
         renderTasks()  
     }
@@ -299,8 +289,6 @@ const Tasks = (() => {
                 return 0
             }
         })
-        orderingButtonsActive = false
-        dateButton.removeEventListener('click', orderTasksByDate)
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         renderTasks()
     }
