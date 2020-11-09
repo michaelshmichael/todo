@@ -200,12 +200,15 @@ const Tasks = (() => {
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.forEach(task => {
-            let tasksDisplay = document.createElement('p');
+            let tasksDisplay = document.createElement('div');
             tasksDisplay.setAttribute('class', 'tasksDisplay')
-            tasksDisplay.textContent = `Task Name: ${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
+            let taskInfoContainer = document.createElement('div')
+            taskInfoContainer.setAttribute('class', 'taskInfoContainer')
+            //tasksDisplay.textContent = `Task Name: ${task.id} Due: ${task.dueDate} Notes: ${task.notes}` 
             bottomRightContainer.appendChild(tasksDisplay)
-            console.log(`${task.priority}`)
+            
             let priorityIndicator = document.createElement('div')
+
                 if(task.priority == "High"){
                     priorityIndicator.classList.add('highPriorityIndicator')
                 } else if (task.priority == "Medium"){
@@ -213,8 +216,37 @@ const Tasks = (() => {
                 } else if (task.priority == "Low"){
                     priorityIndicator.classList.add('lowPriorityIndicator')
                 }
-                tasksDisplay.appendChild(priorityIndicator)
 
+            let taskNameAndDueDateContainer = document.createElement('div')
+            taskNameAndDueDateContainer.setAttribute('class', 'taskNameAndDueDateContainer')
+
+            let taskName = document.createElement('div')
+            taskName.setAttribute('class', 'taskName')
+            taskName.textContent = `${task.id}`
+
+            let dueDate = document.createElement('div')
+            dueDate.setAttribute('class', 'dueDate')
+            dueDate.textContent = `${task.dueDate}`
+
+            let notesContainer = document.createElement('div')
+            notesContainer.setAttribute('class', 'notes')
+
+            let notesHeading = document.createElement('div')
+            notesHeading.setAttribute('class', 'notesHeading')
+
+            let notesContent = document.createElement('div')
+            notesContent.setAttribute('class', 'notesContent')
+            notesContent.textContent = `${task.notes}`
+
+            tasksDisplay.appendChild(priorityIndicator)
+            tasksDisplay.appendChild(taskInfoContainer)
+            taskInfoContainer.appendChild(taskNameAndDueDateContainer)
+            taskNameAndDueDateContainer.appendChild(taskName)
+            taskNameAndDueDateContainer.appendChild(dueDate)
+            taskInfoContainer.appendChild(notesContainer)
+            notesContainer.appendChild(notesHeading)
+            notesContainer.appendChild(notesContent)
+            notesHeading.textContent = 'Notes'
             let deleteTaskButton = document.createElement('i')
             deleteTaskButton.setAttribute('class', 'fa fa-trash deleteTaskIcon')
             deleteTaskButton.setAttribute('data-index', `${counter}`)
@@ -235,7 +267,6 @@ const Tasks = (() => {
             renderTasks()
         }
     }
-
     return {renderTasks}
 })()
 
