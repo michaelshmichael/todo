@@ -128,6 +128,8 @@ const Tasks = (() => {
     const inputTableContainer = document.getElementById('inputTableContainer')
     const importanceButton = document.getElementById('importanceButton')
     const dateButton = document.getElementById('dateButton')
+
+    let newTaskSubmission = true
     
     class task {
         constructor(id, dueDate, priority, checklist, notes){
@@ -141,7 +143,11 @@ const Tasks = (() => {
 
     function addTaskListeners(){
         addTaskButton.addEventListener('click', displayTaskInputForm)
-        submitButton.addEventListener('click', setNewTaskValues)
+        if(newTaskSubmission === true){
+            submitButton.addEventListener('click', setNewTaskValues)
+        } else {
+            submitButton.addEventListener('click', setEditedTaskValue)
+        }
         
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
@@ -161,11 +167,14 @@ const Tasks = (() => {
         let editTaskIcons = Array.from(document.getElementsByClassName('editTaskIcon'))
         editTaskIcons.forEach(icon => {
             icon.addEventListener('click', editTaskContent)
+            newTaskSubmission = false
+            //addTaskListeners()
         })
     }
     addTaskListeners()
 
     function displayTaskInputForm(e){
+        newTaskSubmission = true
         const newTaskInput = document.getElementById('taskInputField').value
         e.preventDefault();
         if (Category.identifyActiveCategory() === undefined){
@@ -178,7 +187,8 @@ const Tasks = (() => {
         inputTable.classList.add('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainerActive')
         taskTitleForm.textContent = `Details For ${newTaskInput}` 
-        }  
+        }
+        addEventListeners()
     }
     
     function setNewTaskValues() {
@@ -197,6 +207,7 @@ const Tasks = (() => {
         }
         let notesValue = document.getElementById('notes').value
         let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
+        console.log(newTask)
         addTaskToActiveCategory(newTask)
     }
 
@@ -307,10 +318,10 @@ const Tasks = (() => {
     }
 
     function editTaskContent(e) {
+        newTaskSubmission = false
         let editNumber = e.target.dataset.index
         let activeCategory = categoryCollection.find(element => element.active === true);
         let taskToEdit = activeCategory.tasks[editNumber]
-        console.log(`${taskToEdit.id} ${taskToEdit.priority}`)
 
         inputTable.classList.remove('inputTable')
         inputTable.classList.add('inputTableActive')
@@ -327,22 +338,40 @@ const Tasks = (() => {
         dueDateForm.value = `${taskToEdit.dueDate}`
         notes.textContent = `${taskToEdit.notes}`
 
-        //THIS CONDITIONAL WON'T WORK
-        if (`${taskToEdit.priority} === 1`) {
-            console.log(`${taskToEdit.priority}`)
-            highPriority.checked = true
-            console.log('High')
-        } else if (`${taskToEdit.priority} === 2`) {
-            console.log(`${taskToEdit.priority}`)
-            mediumPriority.checked = true
-            console.log('Medium')
-        } else if (`${taskToEdit.priority} === 3`){
-            console.log(`${taskToEdit.priority}`)
-            lowPriority.checked = true
-            console.log('Low')
+        if (`${taskToEdit.priority}` == 1) {
+            highPriority.setAttribute('checked', 'x')
+        } else if (`${taskToEdit.priority}` == 2) {
+            mediumPriority.setAttribute('checked', 'x')
+        } else {
+            lowPriority.setAttribute('checked', 'x')
         }
-        
-        // resubmit to the correct place
+        addEventListeners()
+        return taskToEdit
+    }    
+
+    function setEditedTaskValue(){
+        let taskToEdit = editTaskContent()
+        //editTaskContent
+        console.log(taskToEdit)
+        let taskID = taskToEdit.id
+        let dueDateValue = document.getElementById('dueDate').value
+        let priorityValue
+        if (document.getElementById('highPriority').checked) {
+            priorityValue = 1
+        } else if (document.getElementById('mediumPriority').checked) {
+            priorityValue = 2
+        } else if (document.getElementById('lowPriority').checked){
+            priorityValue = 3
+        }
+        let notesValue = document.getElementById('notes').value
+        let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
+
+        let activeCategory = categoryCollection.find(element => element.active === true);
+        let index = activeCategory.indexOf(taskToEdit)
+           
+        activeCategory.tasks.splice(index, 1)
+        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+        addTaskToActiveCategory(newTask)
     }
 
     function orderTasksByImportance() {
