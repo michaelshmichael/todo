@@ -37,7 +37,6 @@ body {
     height: 100px;
     background-color: rgb(52, 52, 252);
     border-radius: 0 15px 0 0;
-    box-shadow: 4px 0;
 }
 
 #categoryHeading {
@@ -58,7 +57,6 @@ body {
     background-color: green;
     border-radius: 0 0 0 15px;
     overflow: auto;
-    box-shadow: 0 4px;
 }
 
 #addCategoryButton {
@@ -81,12 +79,11 @@ body {
     cursor: pointer;
 }
 
-.deleteCategoryButton {
+.deleteCategoryIcon {
     float: right;
     margin-top: 7px;
-    width: 20px;
-    height: 20px;
-    background-color: red;
+    margin-right: 15px;
+    color: white;
     
 }
 
@@ -107,7 +104,6 @@ body {
     height: 450px;
     background-color: rgb(0, 182, 0);
     border-radius: 0 0 50px 0;
-    box-shadow: 4px 4px;
     overflow: auto;
 }
 
@@ -183,7 +179,7 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    width: 520px;
+    width: 555px;
     height: 100px;
 }
 
@@ -215,7 +211,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     height: 90px;
-    width: 305px;
+    width: 280px;
     background-color: rgb(0, 112, 187);
 }   
 
@@ -236,13 +232,30 @@ body {
     overflow: auto;
 }
 
-.fa-trash {
+.deleteEditAndCheckContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    width: 20px;
+    padding-right: 10px;
+    padding-left: 5px;
+}
+
+.deleteTaskIcon {
     float: right;
-    margin-right: 15px;
-    margin-bottom: 68px;
     color: rgb(255, 255, 255);
 }
 
+.editTaskIcon {
+    color: rgb(255, 255, 255);
+    margin-left: 4px;
+}
+
+.checkboxComplete {
+    display: relative;
+}
 /*//////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*INPUT FORM*/
 #inputTableContainer {

@@ -67,10 +67,10 @@ const Category = (() => {
             newCategoryContainer.setAttribute('id', `${counter}`)
             newCategoryContainer.setAttribute('data-index', `${counter}`)
 
-            let deleteCategoryButton = document.createElement('i')
-            deleteCategoryButton.setAttribute('class', 'fa fa-trash deleteCategoryIcon')
-            deleteCategoryButton.setAttribute('data-index', `${counter}`)
-            newCategoryContainer.appendChild(deleteCategoryButton)
+            let deleteCategoryIcon = document.createElement('i')
+            deleteCategoryIcon.setAttribute('class', 'fa fa-trash deleteCategoryIcon')
+            deleteCategoryIcon.setAttribute('data-index', `${counter}`)
+            newCategoryContainer.appendChild(deleteCategoryIcon)
             counter ++
         })
         counter = 0
@@ -253,11 +253,27 @@ const Tasks = (() => {
             notesContainer.appendChild(notesHeading)
             notesContainer.appendChild(notesContent)
             notesHeading.textContent = 'Notes'
-            let deleteTaskButton = document.createElement('i')
-            deleteTaskButton.setAttribute('class', 'fa fa-trash deleteTaskIcon')
-            deleteTaskButton.setAttribute('data-index', `${counter}`)
-            tasksDisplay.appendChild(deleteTaskButton)
-            counter ++
+
+            let deleteEditAndCheckContainer = document.createElement('div')
+            deleteEditAndCheckContainer.setAttribute('class', 'deleteEditAndCheckContainer')
+            taskInfoContainer.appendChild(deleteEditAndCheckContainer)
+
+            let deleteTaskIcon = document.createElement('i')
+            deleteTaskIcon.setAttribute('class', 'fa fa-trash deleteTaskIcon')
+            deleteTaskIcon.setAttribute('data-index', `${counter}`)
+            deleteEditAndCheckContainer.appendChild(deleteTaskIcon)
+            
+
+            let editTaskIcon = document.createElement('i')
+            editTaskIcon.setAttribute('class', 'fa fa-edit editTaskIcon')
+            editTaskIcon.setAttribute('data-index', `${counter}`)
+            deleteEditAndCheckContainer.appendChild(editTaskIcon)
+            counter++
+
+            let checkboxComplete = document.createElement('input')
+            checkboxComplete.setAttribute('type', 'checkbox')
+            checkboxComplete.setAttribute('class', 'checkboxComplete')
+            deleteEditAndCheckContainer.appendChild(checkboxComplete)
         })
         counter = 0
         addTaskListeners()
