@@ -128,8 +128,6 @@ const Tasks = (() => {
     const inputTableContainer = document.getElementById('inputTableContainer')
     const importanceButton = document.getElementById('importanceButton')
     const dateButton = document.getElementById('dateButton')
-
-    let newTaskSubmission = true
     
     class task {
         constructor(id, dueDate, priority, checklist, notes){
@@ -143,11 +141,8 @@ const Tasks = (() => {
 
     function addTaskListeners(){
         addTaskButton.addEventListener('click', displayTaskInputForm)
-        if(newTaskSubmission === true){
-            submitButton.addEventListener('click', setNewTaskValues)
-        } else {
-            submitButton.addEventListener('click', setEditedTaskValue)
-        }
+        submitButton.addEventListener('click', setNewTaskValues)
+        //submitButton.addEventListener('click', setEditedTaskValue)
         
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
@@ -164,17 +159,15 @@ const Tasks = (() => {
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('click', setTaskAsComplete)
             })
-        let editTaskIcons = Array.from(document.getElementsByClassName('editTaskIcon'))
-        editTaskIcons.forEach(icon => {
-            icon.addEventListener('click', editTaskContent)
-            newTaskSubmission = false
-            //addTaskListeners()
-        })
+        //let editTaskIcons = Array.from(document.getElementsByClassName('editTaskIcon'))
+        // editTaskIcons.forEach(icon => {
+        //     icon.addEventListener('click', editTaskContent)
+        //     newTaskSubmission = false
+        // })
     }
     addTaskListeners()
 
     function displayTaskInputForm(e){
-        newTaskSubmission = true
         const newTaskInput = document.getElementById('taskInputField').value
         e.preventDefault();
         if (Category.identifyActiveCategory() === undefined){
@@ -188,7 +181,6 @@ const Tasks = (() => {
         inputTableContainer.setAttribute('id', 'inputTableContainerActive')
         taskTitleForm.textContent = `Details For ${newTaskInput}` 
         }
-        addEventListeners()
     }
     
     function setNewTaskValues() {
@@ -207,7 +199,6 @@ const Tasks = (() => {
         }
         let notesValue = document.getElementById('notes').value
         let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
-        console.log(newTask)
         addTaskToActiveCategory(newTask)
     }
 
@@ -317,62 +308,60 @@ const Tasks = (() => {
         renderTasks()  
     }
 
-    function editTaskContent(e) {
-        newTaskSubmission = false
-        let editNumber = e.target.dataset.index
-        let activeCategory = categoryCollection.find(element => element.active === true);
-        let taskToEdit = activeCategory.tasks[editNumber]
+    //HERE ARE EDITING FUCTIONS HIDDEN
+    // function editTaskContent(e) {
+    //     let editNumber = e.target.dataset.index
+    //     let activeCategory = categoryCollection.find(element => element.active === true);
+    //     let taskToEdit = activeCategory.tasks[editNumber]
 
-        inputTable.classList.remove('inputTable')
-        inputTable.classList.add('inputTableActive')
-        inputTableContainer.setAttribute('id', 'inputTableContainerActive')
+    //     inputTable.classList.remove('inputTable')
+    //     inputTable.classList.add('inputTableActive')
+    //     inputTableContainer.setAttribute('id', 'inputTableContainerActive')
 
-        let taskTitleForm = document.getElementById('taskTitleForm')
-        let dueDateForm = document.getElementById('dueDate')
-        let notes = document.getElementById('notes')
-        let highPriority = document.getElementById('highPriority')
-        let mediumPriority = document.getElementById('mediumPriority')
-        let lowPriority = document.getElementById('lowPriority')
+    //     let taskTitleForm = document.getElementById('taskTitleForm')
+    //     let dueDateForm = document.getElementById('dueDate')
+    //     let notes = document.getElementById('notes')
+    //     let highPriority = document.getElementById('highPriority')
+    //     let mediumPriority = document.getElementById('mediumPriority')
+    //     let lowPriority = document.getElementById('lowPriority')
 
-        taskTitleForm.textContent = `Edit details For ${taskToEdit.id}` 
-        dueDateForm.value = `${taskToEdit.dueDate}`
-        notes.textContent = `${taskToEdit.notes}`
+    //     taskTitleForm.textContent = `Edit details For ${taskToEdit.id}` 
+    //     dueDateForm.value = `${taskToEdit.dueDate}`
+    //     notes.textContent = `${taskToEdit.notes}`
 
-        if (`${taskToEdit.priority}` == 1) {
-            highPriority.setAttribute('checked', 'x')
-        } else if (`${taskToEdit.priority}` == 2) {
-            mediumPriority.setAttribute('checked', 'x')
-        } else {
-            lowPriority.setAttribute('checked', 'x')
-        }
-        addEventListeners()
-        return taskToEdit
-    }    
+    //     if (`${taskToEdit.priority}` == 1) {
+    //         highPriority.setAttribute('checked', 'x')
+    //     } else if (`${taskToEdit.priority}` == 2) {
+    //         mediumPriority.setAttribute('checked', 'x')
+    //     } else {
+    //         lowPriority.setAttribute('checked', 'x')
+    //     }
+        
+    //     return taskToEdit
+    // }    
 
-    function setEditedTaskValue(){
-        let taskToEdit = editTaskContent()
-        //editTaskContent
-        console.log(taskToEdit)
-        let taskID = taskToEdit.id
-        let dueDateValue = document.getElementById('dueDate').value
-        let priorityValue
-        if (document.getElementById('highPriority').checked) {
-            priorityValue = 1
-        } else if (document.getElementById('mediumPriority').checked) {
-            priorityValue = 2
-        } else if (document.getElementById('lowPriority').checked){
-            priorityValue = 3
-        }
-        let notesValue = document.getElementById('notes').value
-        let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
+    // function setEditedTaskValue(){
+    //     let taskToEdit = editTaskContent()
+    //     let taskID = taskToEdit.id
+    //     let dueDateValue = document.getElementById('dueDate').value
+    //     let priorityValue
+    //     if (document.getElementById('highPriority').checked) {
+    //         priorityValue = 1
+    //     } else if (document.getElementById('mediumPriority').checked) {
+    //         priorityValue = 2
+    //     } else if (document.getElementById('lowPriority').checked){
+    //         priorityValue = 3
+    //     }
+    //     let notesValue = document.getElementById('notes').value
+    //     let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
 
-        let activeCategory = categoryCollection.find(element => element.active === true);
-        let index = activeCategory.indexOf(taskToEdit)
-           
-        activeCategory.tasks.splice(index, 1)
-        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-        addTaskToActiveCategory(newTask)
-    }
+    //     let activeCategory = categoryCollection.find(element => element.active === true);
+    //     let index = activeCategory.indexOf(taskToEdit)
+    //     console.log(index)
+    //     activeCategory.tasks.splice(index, 1)
+    //     //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+    //     addTaskToActiveCategory(newTask)
+    // }
 
     function orderTasksByImportance() {
         console.log('order by importance')
@@ -400,7 +389,7 @@ const Tasks = (() => {
     
    
     function deleteTask(e) { 
-        if (confirm("Delete Task?") == true) { 
+        if (confirm("Delete Task?")) { 
             const activeCategory = categoryCollection.find(element => element.active === true);
             const index = e.target.dataset.index
             activeCategory.tasks.splice(index, 1)
