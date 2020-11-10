@@ -107,7 +107,7 @@ const Category = (() => {
     
     function deleteCategory(e) {
         if (confirm("Delete Category?") == true) {   
-            document.querySelectorAll('.tasksDisplay').forEach(task => task.remove());
+            document.querySelectorAll('.tasksDisplay .completedTasksDisplay').forEach(task => task.remove());
             const index = e.target.dataset.index;
             categoryCollection.splice(index, 1)
             localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
@@ -193,7 +193,6 @@ const Tasks = (() => {
     }
 
     function addTaskToActiveCategory(newTask) {
-        //if(newTask.priorityValue == 1 || 2 || 3){
         Category.identifyActiveCategory().tasks.push(newTask)
         inputTable.classList.remove('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
@@ -204,11 +203,16 @@ const Tasks = (() => {
     function renderTasks() {
         let counter = 0
         document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
+        document.querySelectorAll('.completedTasksDisplay').forEach(e => e.remove());
         let activeCategory = categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.forEach(task => {
             let tasksDisplay = document.createElement('div');
-            tasksDisplay.setAttribute('class', 'tasksDisplay')
+            if(task.checklist == false){
+                tasksDisplay.setAttribute('class', 'tasksDisplay')
+            } else {
+                 tasksDisplay.setAttribute('class', 'completedTasksDisplay') 
+            }
             let taskInfoContainer = document.createElement('div')
             taskInfoContainer.setAttribute('class', 'taskInfoContainer')
             bottomRightContainer.appendChild(tasksDisplay)
@@ -268,15 +272,42 @@ const Tasks = (() => {
             editTaskIcon.setAttribute('class', 'fa fa-edit editTaskIcon')
             editTaskIcon.setAttribute('data-index', `${counter}`)
             deleteEditAndCheckContainer.appendChild(editTaskIcon)
-            counter++
+            
 
-            let checkboxComplete = document.createElement('input')
-            checkboxComplete.setAttribute('type', 'checkbox')
-            checkboxComplete.setAttribute('class', 'checkboxComplete')
+            let checkboxComplete = document.createElement('i')
+            checkboxComplete.setAttribute('class', 'fa fa-check-circle checkboxComplete')
+            checkboxComplete.setAttribute('data-index', `${counter}`)
+            
             deleteEditAndCheckContainer.appendChild(checkboxComplete)
+            counter++
         })
         counter = 0
         addTaskListeners()
+
+        let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', setTaskAsComplete)
+            })
+    }
+
+    function setTaskAsComplete(e) {
+        let checkboxNumber = e.target.dataset.index
+        let activeCategory = categoryCollection.find(element => element.active === true);
+        console.log(activeCategory)
+        let completedTask = activeCategory.tasks[checkboxNumber]
+        if(completedTask.checklist) {
+            completedTask.checklist = false
+        } else {
+            completedTask.checklist = true
+        }
+        console.log(completedTask)
+        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
+        renderTasks()  
+        //renderTasks()
+        //When checkbox is ticked, set the corresponding task checked value in the array
+        //create if statement in renderTasks() to display differently when checked
+        //save category collection to local memory
+        //re render the task
     }
 
     function orderTasksByImportance() {
