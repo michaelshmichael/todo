@@ -154,6 +154,14 @@ const Tasks = (() => {
         })
         importanceButton.addEventListener('click', orderTasksByImportance)
         dateButton.addEventListener('click', orderTasksByDate)
+        let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', setTaskAsComplete)
+            })
+        let editTaskIcons = Array.from(document.getElementsByClassName('editTaskIcon'))
+        editTaskIcons.forEach(icon => {
+            icon.addEventListener('click', editTaskContent)
+        })
     }
     addTaskListeners()
 
@@ -283,31 +291,58 @@ const Tasks = (() => {
         })
         counter = 0
         addTaskListeners()
-
-        let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', setTaskAsComplete)
-            })
     }
 
     function setTaskAsComplete(e) {
         let checkboxNumber = e.target.dataset.index
         let activeCategory = categoryCollection.find(element => element.active === true);
-        console.log(activeCategory)
         let completedTask = activeCategory.tasks[checkboxNumber]
         if(completedTask.checklist) {
             completedTask.checklist = false
         } else {
             completedTask.checklist = true
         }
-        console.log(completedTask)
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
         renderTasks()  
-        //renderTasks()
-        //When checkbox is ticked, set the corresponding task checked value in the array
-        //create if statement in renderTasks() to display differently when checked
-        //save category collection to local memory
-        //re render the task
+    }
+
+    function editTaskContent(e) {
+        let editNumber = e.target.dataset.index
+        let activeCategory = categoryCollection.find(element => element.active === true);
+        let taskToEdit = activeCategory.tasks[editNumber]
+        console.log(`${taskToEdit.id} ${taskToEdit.priority}`)
+
+        inputTable.classList.remove('inputTable')
+        inputTable.classList.add('inputTableActive')
+        inputTableContainer.setAttribute('id', 'inputTableContainerActive')
+
+        let taskTitleForm = document.getElementById('taskTitleForm')
+        let dueDateForm = document.getElementById('dueDate')
+        let notes = document.getElementById('notes')
+        let highPriority = document.getElementById('highPriority')
+        let mediumPriority = document.getElementById('mediumPriority')
+        let lowPriority = document.getElementById('lowPriority')
+
+        taskTitleForm.textContent = `Edit details For ${taskToEdit.id}` 
+        dueDateForm.value = `${taskToEdit.dueDate}`
+        notes.textContent = `${taskToEdit.notes}`
+
+        //THIS CONDITIONAL WON'T WORK
+        if (`${taskToEdit.priority} === 1`) {
+            console.log(`${taskToEdit.priority}`)
+            highPriority.checked = true
+            console.log('High')
+        } else if (`${taskToEdit.priority} === 2`) {
+            console.log(`${taskToEdit.priority}`)
+            mediumPriority.checked = true
+            console.log('Medium')
+        } else if (`${taskToEdit.priority} === 3`){
+            console.log(`${taskToEdit.priority}`)
+            lowPriority.checked = true
+            console.log('Low')
+        }
+        
+        // resubmit to the correct place
     }
 
     function orderTasksByImportance() {
