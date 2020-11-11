@@ -305,6 +305,10 @@ body {
 
 }
 
+#addCategoryInput {
+    height: 30px;
+    width: 100px;
+}
 #categoryInputField{
     font-family: 'Poppins', sans-serif;
     height: 30px;

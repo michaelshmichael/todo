@@ -169,6 +169,7 @@ const Tasks = (() => {
             inputTable.classList.remove('inputTableActive')
             inputTable.classList.add('inputTable')
             inputTableContainer.setAttribute('id', 'inputTableContainer')
+            resetTaskInputValues()
         })
         importanceButton.addEventListener('click', orderTasksByImportance)
         dateButton.addEventListener('click', orderTasksByDate)
@@ -224,6 +225,7 @@ const Tasks = (() => {
         inputTable.classList.remove('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+        resetTaskInputValues()
         renderTasks()
     }
 
@@ -323,6 +325,15 @@ const Tasks = (() => {
         }
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
         renderTasks()  
+    }
+
+    function resetTaskInputValues (){
+        let taskID = document.getElementById('taskInputField')
+        let dueDate = document.getElementById('dueDate')
+        let notes = document.getElementById('notes')
+        taskID.value = ''
+        dueDate.value = ''
+        notes.value = ''
     }
 
     //HERE ARE EDITING FUCTIONS HIDDEN
