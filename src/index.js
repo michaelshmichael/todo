@@ -9,7 +9,6 @@ localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
 let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
 const Category = (() => {
-
     class toDoCategory {
         constructor(id, tasks){
             this.id = id;
@@ -19,7 +18,11 @@ const Category = (() => {
     }
 
     function setCategoryListeners(){
-        const addCategoryButton = document.getElementById('addCategoryButton')
+        const displayCategoryInput = document.getElementById('addCategoryButton')
+        const categoryInputTable = document.querySelector('.categoryInputTable')
+        const categoryInputField = document.getElementById('categoryInputField')
+        const submitCategory = document.getElementById('submitCategory')
+        const cancelCategoryInput = document.getElementById('cancelCategoryInput')
         let categories = Array.from(document.getElementsByClassName('newCategory'))
         let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
         categories.forEach(category => {
@@ -29,17 +32,30 @@ const Category = (() => {
         deleteCategoryIcons.forEach(button => {
             button.addEventListener('click', deleteCategory)
         })
-        addCategoryButton.addEventListener('click', createNewCategory)
+        displayCategoryInput.addEventListener('click', () => {
+            categoryInputTable.classList.remove('categoryInputTable')
+            categoryInputTable.classList.add('categoryInputTableActive')
+        })
+        submitCategory.addEventListener('click', createNewCategory)
+        cancelCategoryInput.addEventListener('click', () => {
+            categoryInputTable.classList.remove('categoryInputTableActive')
+            categoryInputTable.classList.add('categoryInputTable')
+            categoryInputField.value = ''
+        })
     }
     setCategoryListeners()
 
     function createNewCategory() {
-        let newCategoryName = prompt('Write the name of your category')
+        const categoryInputTable = document.querySelector('.categoryInputTableActive')
+        let categoryInputField = document.getElementById('categoryInputField')
+        let newCategoryName = categoryInputField.value
         if (newCategoryName === "") {
             alert('Please Enter a Value')
         } else if (newCategoryName) {
             let newCategory = new toDoCategory(newCategoryName, [])
             categoryCollection.push(newCategory)
+            categoryInputTable.classList.remove('categoryInputTableActive')
+            categoryInputTable.classList.add('categoryInputTable')
             renderCategories()
             setCategoryListeners()
             localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
