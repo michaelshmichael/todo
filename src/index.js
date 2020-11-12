@@ -1,6 +1,8 @@
 import {task} from './taskClass.js'
-import {setCategoryListeners} from './setCategoryListeners.js'
-
+import {createNewCategory} from './createNewCategory.js'
+import {displayCategoryHeading} from './displayCategoryHeading.js'
+import {deleteCategory} from './deleteCategory.js'
+import {setActiveCategory} from './setActiveCategory.js'
 
 // let categoryCollection
 // if (localStorage.getItem('categoryCollection')) {
@@ -11,16 +13,46 @@ import {setCategoryListeners} from './setCategoryListeners.js'
 // localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
 // let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
+
 const Category = (() => {
     
     let categoryCollection = []
+    
+    const setCategoryListeners = () =>{
+        const displayCategoryInput = document.getElementById('addCategoryButton')
+        const categoryInputTable = document.querySelector('.categoryInputTable')
+        const categoryInputField = document.getElementById('categoryInputField')
+        const submitCategory = document.getElementById('submitCategory')
+        const cancelCategoryInput = document.getElementById('cancelCategoryInput')
+        let categories = Array.from(document.getElementsByClassName('newCategory'))
+        let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
+        categories.forEach(category => {
+            category.addEventListener('click', displayCategoryHeading)
+            category.addEventListener('click', setActiveCategory)
+        })
+        
+        deleteCategoryIcons.forEach(button => {
+            button.addEventListener('click', deleteCategory)
+        })
+        displayCategoryInput.addEventListener('click', () => {
+            categoryInputTable.classList.remove('categoryInputTable')
+            categoryInputTable.classList.add('categoryInputTableActive')
+        })
+        submitCategory.addEventListener('click', createNewCategory)
+        cancelCategoryInput.addEventListener('click', () => {
+            categoryInputTable.classList.remove('categoryInputTableActive')
+            categoryInputTable.classList.add('categoryInputTable')
+            categoryInputField.value = ''
+        })
+    }
+    setCategoryListeners()
 
     function identifyActiveCategory(){
         let activeCategory = categoryCollection.find(element => element.active === true);
         return activeCategory
     }
    
-    return{identifyActiveCategory, categoryCollection}
+    return{setCategoryListeners, identifyActiveCategory, categoryCollection}
 })()
 
 const Tasks = (() => {
@@ -306,8 +338,6 @@ const Tasks = (() => {
     }
     return {renderTasks}
 })()
-
-setCategoryListeners()
 
 export {Category, Tasks}
 

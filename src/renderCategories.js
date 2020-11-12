@@ -18,7 +18,7 @@ const renderCategories = () => {
         counter ++
     })
     counter = 0
-    //setCategoryListeners()
+    Category.setCategoryListeners()
 }
 
 export {renderCategories}

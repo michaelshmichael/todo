@@ -1,4 +1,3 @@
-import {setCategoryListeners} from './setCategoryListeners.js'
 import {Category} from './index.js'
 import {toDoCategory} from './categoryClass'
 import {renderCategories} from './renderCategories.js'
@@ -16,7 +15,7 @@ const createNewCategory = () => {
         categoryInputTable.classList.remove('categoryInputTableActive')
         categoryInputTable.classList.add('categoryInputTable')
         renderCategories()
-        setCategoryListeners()
+        Category.setCategoryListeners()
         //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     }
     makeAllCategoriesInactive()
