@@ -1,47 +1,19 @@
-import {toDoCategory} from './categoryClass.js'
 import {task} from './taskClass.js'
 import {setCategoryListeners} from './setCategoryListeners.js'
 
 
-let categoryCollection
-if (localStorage.getItem('categoryCollection')) {
-categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-} else {
-categoryCollection = []
-}
-
-localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-let data = JSON.parse(localStorage.getItem('categoryCollection'));
+// let categoryCollection
+// if (localStorage.getItem('categoryCollection')) {
+// categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+// } else {
+// categoryCollection = []
+// }
+// localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+// let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
 const Category = (() => {
     
-    function createNewCategory() {
-        const categoryInputTable = document.querySelector('.categoryInputTableActive')
-        let categoryInputField = document.getElementById('categoryInputField')
-        let newCategoryName = categoryInputField.value
-        if (newCategoryName === "") {
-            alert('Please Enter a Value')
-        } else if (newCategoryName) {
-            let newCategory = new toDoCategory(newCategoryName, [])
-            categoryCollection.push(newCategory)
-            categoryInputTable.classList.remove('categoryInputTableActive')
-            categoryInputTable.classList.add('categoryInputTable')
-            renderCategories()
-            //setCategoryListeners()
-            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-        }
-        makeAllCategoriesInactive()
-    }
-
-    function displayCategoryHeading(e) {
-        topRightContainer.textContent = '';
-        let selectedCategory = e.target.id
-        let categoryDisplay = document.createElement('h1')
-        categoryDisplay.textContent = categoryCollection[selectedCategory].id
-        categoryDisplay.setAttribute('id', 'categoryHeading')
-        topRightContainer.appendChild(categoryDisplay);
-    }
-    
+    let categoryCollection = []
 
     function renderCategories() {
         let counter = 0
@@ -63,7 +35,7 @@ const Category = (() => {
         counter = 0
         //setCategoryListeners()
     }
-    renderCategories(data)
+    renderCategories()//(data)
 
     function setActiveCategory(e){
         let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
@@ -76,7 +48,7 @@ const Category = (() => {
 
         makeAllCategoriesInactive()
         categoryCollection[selectedCategoryNum].active = true
-        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         Tasks.renderTasks(); 
     }
 
@@ -97,13 +69,13 @@ const Category = (() => {
             document.querySelectorAll('.tasksDisplay .completedTasksDisplay').forEach(task => task.remove());
             const index = e.target.dataset.index;
             categoryCollection.splice(index, 1)
-            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+            //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
             renderCategories()
             Tasks.renderTasks()
         } 
     }
    
-    return{identifyActiveCategory, displayCategoryHeading, setActiveCategory, deleteCategory, createNewCategory}
+    return{identifyActiveCategory, categoryCollection, setActiveCategory, deleteCategory, renderCategories, makeAllCategoriesInactive}
 })()
 
 const Tasks = (() => {
@@ -186,7 +158,7 @@ const Tasks = (() => {
         Category.identifyActiveCategory().tasks.push(newTask)
         inputTable.classList.remove('inputTableActive')
         inputTableContainer.setAttribute('id', 'inputTableContainer')
-        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         resetTaskInputValues()
         renderTasks()
     }
@@ -195,7 +167,7 @@ const Tasks = (() => {
         let counter = 0
         document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
         document.querySelectorAll('.completedTasksDisplay').forEach(e => e.remove());
-        let activeCategory = categoryCollection.find(element => element.active === true);
+        let activeCategory = Category.categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.forEach(task => {
             let tasksDisplay = document.createElement('div');
@@ -278,14 +250,14 @@ const Tasks = (() => {
 
     function setTaskAsComplete(e) {
         let checkboxNumber = e.target.dataset.index
-        let activeCategory = categoryCollection.find(element => element.active === true);
+        let activeCategory = Category.categoryCollection.find(element => element.active === true);
         let completedTask = activeCategory.tasks[checkboxNumber]
         if(completedTask.checklist) {
             completedTask.checklist = false
         } else {
             completedTask.checklist = true
         }
-        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
+        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
         renderTasks()  
     }
 
@@ -355,35 +327,35 @@ const Tasks = (() => {
 
     function orderTasksByImportance() {
         console.log('order by importance')
-        let activeCategory = categoryCollection.find(element => element.active === true);
+        let activeCategory = Category.categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.sort(function(a,b){ 
             return a.priority > b.priority ? 1 : a.priority < b.priority ? -1 : 0;
         })
     
-        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
+        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
         renderTasks()  
     }
    
     
     function orderTasksByDate() {
         console.log('order by date')
-        let activeCategory = categoryCollection.find(element => element.active === true);
+        let activeCategory = Category.categoryCollection.find(element => element.active === true);
         let activeCategoryTasks = activeCategory.tasks
         activeCategoryTasks.sort(function(a,b){
             return a.dueDate > b.dueDate ? 1 : a.dueDate < b.dueDate ? -1 : 0;
         })
-        localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         renderTasks()
     }
     
    
     function deleteTask(e) { 
         if (confirm("Delete Task?")) { 
-            const activeCategory = categoryCollection.find(element => element.active === true);
+            const activeCategory = Category.categoryCollection.find(element => element.active === true);
             const index = e.target.dataset.index
             activeCategory.tasks.splice(index, 1)
-            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+            //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
             renderTasks()
         }
     }

@@ -1,4 +1,6 @@
 import {Category} from './index.js'
+import {createNewCategory} from './createNewCategory.js'
+import {displayCategoryHeading} from './displayCategoryHeading.js'
 
 const setCategoryListeners = () =>{
     const displayCategoryInput = document.getElementById('addCategoryButton')
@@ -9,7 +11,7 @@ const setCategoryListeners = () =>{
     let categories = Array.from(document.getElementsByClassName('newCategory'))
     let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
     categories.forEach(category => {
-        category.addEventListener('click', Category.displayCategoryHeading)
+        category.addEventListener('click', displayCategoryHeading)
         category.addEventListener('click', Category.setActiveCategory)
     })
     
@@ -20,7 +22,7 @@ const setCategoryListeners = () =>{
         categoryInputTable.classList.remove('categoryInputTable')
         categoryInputTable.classList.add('categoryInputTableActive')
     })
-    submitCategory.addEventListener('click', Category.createNewCategory)
+    submitCategory.addEventListener('click', createNewCategory)
     cancelCategoryInput.addEventListener('click', () => {
         categoryInputTable.classList.remove('categoryInputTableActive')
         categoryInputTable.classList.add('categoryInputTable')
