@@ -15,28 +15,6 @@ const Category = (() => {
     
     let categoryCollection = []
 
-    function renderCategories() {
-        let counter = 0
-        bottomLeftCategoryContainer.textContent = ''
-        categoryCollection.forEach(category => {
-            let newCategoryContainer = document.createElement('p')
-            newCategoryContainer.classList.add('newCategory')
-            newCategoryContainer.textContent = category.id
-            bottomLeftCategoryContainer.appendChild(newCategoryContainer)
-            newCategoryContainer.setAttribute('id', `${counter}`)
-            newCategoryContainer.setAttribute('data-index', `${counter}`)
-
-            let deleteCategoryIcon = document.createElement('i')
-            deleteCategoryIcon.setAttribute('class', 'fa fa-trash deleteCategoryIcon')
-            deleteCategoryIcon.setAttribute('data-index', `${counter}`)
-            newCategoryContainer.appendChild(deleteCategoryIcon)
-            counter ++
-        })
-        counter = 0
-        //setCategoryListeners()
-    }
-    renderCategories()//(data)
-
     function setActiveCategory(e){
         let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
         displayedCategories.forEach(category => {
@@ -63,19 +41,8 @@ const Category = (() => {
         let activeCategory = categoryCollection.find(element => element.active === true);
         return activeCategory
     }
-
-    function deleteCategory(e){
-        if (confirm("Delete Category?")) {   
-            document.querySelectorAll('.tasksDisplay .completedTasksDisplay').forEach(task => task.remove());
-            const index = e.target.dataset.index;
-            categoryCollection.splice(index, 1)
-            //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-            renderCategories()
-            Tasks.renderTasks()
-        } 
-    }
    
-    return{identifyActiveCategory, categoryCollection, setActiveCategory, deleteCategory, renderCategories, makeAllCategoriesInactive}
+    return{identifyActiveCategory, categoryCollection, setActiveCategory, makeAllCategoriesInactive}
 })()
 
 const Tasks = (() => {
@@ -364,7 +331,7 @@ const Tasks = (() => {
 
 setCategoryListeners()
 
-export {Category}
+export {Category, Tasks}
 
 
 
