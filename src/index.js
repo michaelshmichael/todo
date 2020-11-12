@@ -1,3 +1,5 @@
+import {deleteCategory} from './deleteCategory.js'
+
 let categoryCollection
 if (localStorage.getItem('categoryCollection')) {
   categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
@@ -9,6 +11,7 @@ localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
 let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
 const Category = (() => {
+
     class toDoCategory {
         constructor(id, tasks){
             this.id = id;
@@ -29,6 +32,7 @@ const Category = (() => {
             category.addEventListener('click', displayCategoryHeading)
             category.addEventListener('click', setActiveCategory)
         })
+        
         deleteCategoryIcons.forEach(button => {
             button.addEventListener('click', deleteCategory)
         })
@@ -43,7 +47,6 @@ const Category = (() => {
             categoryInputField.value = ''
         })
     }
-    setCategoryListeners()
 
     function createNewCategory() {
         const categoryInputTable = document.querySelector('.categoryInputTableActive')
@@ -120,20 +123,10 @@ const Category = (() => {
         let activeCategory = categoryCollection.find(element => element.active === true);
         return activeCategory
     }
-    
-    function deleteCategory(e) {
-        if (confirm("Delete Category?")) {   
-            document.querySelectorAll('.tasksDisplay .completedTasksDisplay').forEach(task => task.remove());
-            const index = e.target.dataset.index;
-            categoryCollection.splice(index, 1)
-            localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-            renderCategories()
-            Tasks.renderTasks()
-        } 
-    }
-
+   
     return{identifyActiveCategory}
 })()
+
 
 
 const Tasks = (() => {
@@ -427,6 +420,13 @@ const Tasks = (() => {
     }
     return {renderTasks}
 })()
+
+
+
+
+
+
+
 
 
     
