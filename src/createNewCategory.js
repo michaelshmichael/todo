@@ -2,6 +2,7 @@ import {setCategoryListeners} from './setCategoryListeners.js'
 import {Category} from './index.js'
 import {toDoCategory} from './categoryClass'
 import {renderCategories} from './renderCategories.js'
+import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
 
 const createNewCategory = () => {
     const categoryInputTable = document.querySelector('.categoryInputTableActive')
@@ -18,7 +19,7 @@ const createNewCategory = () => {
         setCategoryListeners()
         //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     }
-    Category.makeAllCategoriesInactive()
+    makeAllCategoriesInactive()
 }
 
 export {createNewCategory}

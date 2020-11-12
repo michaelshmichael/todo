@@ -15,19 +15,12 @@ const Category = (() => {
     
     let categoryCollection = []
 
-    function makeAllCategoriesInactive(){
-        categoryCollection.forEach(category => {
-            category.active = false
-        })
-    }
-    //makeAllCategoriesInactive()
-
     function identifyActiveCategory(){
         let activeCategory = categoryCollection.find(element => element.active === true);
         return activeCategory
     }
    
-    return{identifyActiveCategory, categoryCollection, makeAllCategoriesInactive}
+    return{identifyActiveCategory, categoryCollection}
 })()
 
 const Tasks = (() => {
