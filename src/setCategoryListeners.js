@@ -1,7 +1,7 @@
-import {Category} from './index.js'
 import {createNewCategory} from './createNewCategory.js'
 import {displayCategoryHeading} from './displayCategoryHeading.js'
 import {deleteCategory} from './deleteCategory.js'
+import {setActiveCategory} from './setActiveCategory.js'
 
 const setCategoryListeners = () =>{
     const displayCategoryInput = document.getElementById('addCategoryButton')
@@ -13,7 +13,7 @@ const setCategoryListeners = () =>{
     let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
     categories.forEach(category => {
         category.addEventListener('click', displayCategoryHeading)
-        category.addEventListener('click', Category.setActiveCategory)
+        category.addEventListener('click', setActiveCategory)
     })
     
     deleteCategoryIcons.forEach(button => {

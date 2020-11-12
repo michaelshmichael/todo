@@ -15,21 +15,6 @@ const Category = (() => {
     
     let categoryCollection = []
 
-    function setActiveCategory(e){
-        let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
-        displayedCategories.forEach(category => {
-            category.classList.remove('activeCategory')
-        })
-        let selectedCategoryNum = e.target.id
-        let activeCategory = displayedCategories[selectedCategoryNum]
-        activeCategory.classList.add('activeCategory')
-
-        makeAllCategoriesInactive()
-        categoryCollection[selectedCategoryNum].active = true
-        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-        Tasks.renderTasks(); 
-    }
-
     function makeAllCategoriesInactive(){
         categoryCollection.forEach(category => {
             category.active = false
@@ -42,7 +27,7 @@ const Category = (() => {
         return activeCategory
     }
    
-    return{identifyActiveCategory, categoryCollection, setActiveCategory, makeAllCategoriesInactive}
+    return{identifyActiveCategory, categoryCollection, makeAllCategoriesInactive}
 })()
 
 const Tasks = (() => {
