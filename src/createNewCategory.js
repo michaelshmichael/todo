@@ -1,5 +1,5 @@
 import {Category} from './index.js'
-import {toDoCategory} from './categoryClass'
+import {toDoCategory} from './classConstructor'
 import {renderCategories} from './renderCategories.js'
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
 

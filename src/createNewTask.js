@@ -1,5 +1,5 @@
 import {Category} from './index.js'
-import {task} from './taskClass.js'
+import {task} from './classConstructor.js'
 import {renderTasks} from './renderTasks.js'
 
 const inputTable = document.querySelector('.inputTable')
