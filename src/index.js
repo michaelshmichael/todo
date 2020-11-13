@@ -6,14 +6,8 @@ import {setActiveCategory} from './setActiveCategory.js'
 import {renderTasks} from './renderTasks.js'
 import {orderTasksByImportance} from './orderTasksByImportance.js'
 import {orderTasksByDate} from './orderTasksByDate.js'
-// let categoryCollection
-// if (localStorage.getItem('categoryCollection')) {
-// categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-// } else {
-// categoryCollection = []
-// }
-// localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-// let data = JSON.parse(localStorage.getItem('categoryCollection'));
+import {setTaskAsComplete} from './alteringExistingTasks.js'
+import {deleteTask} from './alteringExistingTasks.js'
 
 
 const Category = (() => {
@@ -66,7 +60,6 @@ const Tasks = (() => {
     const inputTableContainer = document.getElementById('inputTableContainer')
     const importanceButton = document.getElementById('importanceButton')
     const dateButton = document.getElementById('dateButton')
-    
     
 
     function addTaskListeners(){
@@ -142,18 +135,7 @@ const Tasks = (() => {
         renderTasks()
     }
 
-    function setTaskAsComplete(e) {
-        let checkboxNumber = e.target.dataset.index
-        let activeCategory = Category.categoryCollection.find(element => element.active === true);
-        let completedTask = activeCategory.tasks[checkboxNumber]
-        if(completedTask.checklist) {
-            completedTask.checklist = false
-        } else {
-            completedTask.checklist = true
-        }
-        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
-        renderTasks()  
-    }
+    
 
     function resetTaskInputValues (){
         let taskID = document.getElementById('taskInputField')
@@ -219,20 +201,17 @@ const Tasks = (() => {
     //     addTaskToActiveCategory(newTask)
     // }
 
-   
+    return {addTaskListeners}
     
-    
-    
-   
-    function deleteTask(e) { 
-        if (confirm("Delete Task?")) { 
-            const activeCategory = Category.categoryCollection.find(element => element.active === true);
-            const index = e.target.dataset.index
-            activeCategory.tasks.splice(index, 1)
-            //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-            renderTasks()
-        }
-    }
 })()
+
+// let categoryCollection
+// if (localStorage.getItem('categoryCollection')) {
+// categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+// } else {
+// categoryCollection = []
+// }
+// localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+// let data = JSON.parse(localStorage.getItem('categoryCollection'));
 
 export {Category, Tasks}
