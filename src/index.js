@@ -1,9 +1,7 @@
-import {task} from './taskClass.js'
 import {createNewCategory} from './createNewCategory.js'
 import {displayCategoryHeading} from './displayCategoryHeading.js'
 import {deleteCategory} from './deleteCategory.js'
 import {setActiveCategory} from './setActiveCategory.js'
-import {renderTasks} from './renderTasks.js'
 import {orderTasksByImportance} from './orderTasksByImportance.js'
 import {orderTasksByDate} from './orderTasksByDate.js'
 import {setTaskAsComplete} from './alteringExistingTasks.js'
@@ -11,7 +9,6 @@ import {deleteTask} from './alteringExistingTasks.js'
 import {displayTaskInputForm} from './createNewTask.js'
 import {setNewTaskValues} from './createNewTask.js'
 import {cancelTaskInput} from './createNewTask.js'
-
 
 const Category = (() => {
     
@@ -45,13 +42,8 @@ const Category = (() => {
         })
     }
     setCategoryListeners()
-
-    function identifyActiveCategory(){
-        let activeCategory = categoryCollection.find(element => element.active === true);
-        return activeCategory
-    }
    
-    return{setCategoryListeners, identifyActiveCategory, categoryCollection}
+    return{setCategoryListeners, categoryCollection}
 })()
 
 const addTaskListeners = () => {
@@ -81,7 +73,6 @@ const addTaskListeners = () => {
         // })
 } 
 addTaskListeners()
-
 
 export {Category, addTaskListeners}
 

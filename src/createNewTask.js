@@ -9,7 +9,7 @@ const taskTitleForm = document.getElementById('taskTitleForm')
 const displayTaskInputForm = (e) => {
     const newTaskInput = document.getElementById('taskInputField').value
     e.preventDefault();
-    if (Category.identifyActiveCategory() === undefined){
+    if (_identifyActiveCategory() === undefined){
         alert('Please Select a Category')
     } else if(newTaskInput === ''){
         alert('Please Enter a Value')
@@ -41,7 +41,7 @@ const setNewTaskValues = () => {
 }
 
 const _addTaskToActiveCategory = (newTask) => {
-    Category.identifyActiveCategory().tasks.push(newTask)
+    _identifyActiveCategory().tasks.push(newTask)
     inputTable.classList.remove('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainer')
     //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
@@ -63,6 +63,11 @@ function _resetTaskInputValues (){
     taskID.value = ''
     dueDate.value = ''
     notes.value = ''
+}
+
+function _identifyActiveCategory(){
+    let activeCategory = Category.categoryCollection.find(element => element.active === true);
+    return activeCategory
 }
 
 export {displayTaskInputForm, setNewTaskValues, cancelTaskInput}
