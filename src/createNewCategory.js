@@ -19,6 +19,7 @@ const createNewCategory = () => {
         //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     }
     makeAllCategoriesInactive()
+    categoryInputField.value = ''
 }
 
 export {createNewCategory}
