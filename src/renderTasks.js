@@ -1,4 +1,4 @@
-import {Category, Tasks} from './index.js'
+import {Category, addTaskListeners} from './index.js'
 
 const renderTasks = () => {
     let counter = 0
@@ -82,7 +82,7 @@ const renderTasks = () => {
         counter++
     })
     counter = 0
-    Tasks.addTaskListeners()
+    addTaskListeners()
 }
 
 export {renderTasks}

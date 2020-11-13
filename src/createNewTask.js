@@ -65,5 +65,4 @@ function _resetTaskInputValues (){
     notes.value = ''
 }
 
-
 export {displayTaskInputForm, setNewTaskValues, cancelTaskInput}

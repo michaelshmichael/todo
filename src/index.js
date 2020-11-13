@@ -54,9 +54,7 @@ const Category = (() => {
     return{setCategoryListeners, identifyActiveCategory, categoryCollection}
 })()
 
-const Tasks = (() => {
-    
-    function addTaskListeners(){
+const addTaskListeners = () => {
         const addTaskButton = document.getElementById('addTaskButton')
         const submitButton = document.getElementById('submitButton')
         const cancelInputButton = document.getElementById('cancelButton')
@@ -81,14 +79,11 @@ const Tasks = (() => {
         //     icon.addEventListener('click', editTaskContent)
         //     newTaskSubmission = false
         // })
-    }
-    addTaskListeners()
-    
-    return {addTaskListeners}
-    
-})()
+} 
+addTaskListeners()
 
-export {Category, Tasks}
+
+export {Category, addTaskListeners}
 
 
 // let categoryCollection

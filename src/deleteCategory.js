@@ -1,6 +1,6 @@
 import {renderCategories} from './renderCategories.js'
 import {Category} from './index.js'
-import {Tasks} from './index.js'
+import {renderTasks} from './renderTasks.js'
 
 const deleteCategory = (e) => {
     if (confirm("Delete Category?")) {   
@@ -10,7 +10,7 @@ const deleteCategory = (e) => {
         //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
         renderCategories()
         Category.setCategoryListeners()
-        Tasks.renderTasks()
+        renderTasks()
     } 
 }
 
