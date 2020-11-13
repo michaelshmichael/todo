@@ -9,11 +9,9 @@ import {deleteTask} from './alteringExistingTasks.js'
 import {displayTaskInputForm} from './createNewTask.js'
 import {setNewTaskValues} from './createNewTask.js'
 import {cancelTaskInput} from './createNewTask.js'
+import {renderCategories} from './renderCategories.js'
 
 const Category = (() => {
-    
-    let categoryCollection = []
-    
     const setCategoryListeners = () =>{
         const displayCategoryInput = document.getElementById('addCategoryButton')
         const categoryInputTable = document.querySelector('.categoryInputTable')
@@ -21,12 +19,11 @@ const Category = (() => {
         const submitCategory = document.getElementById('submitCategory')
         const cancelCategoryInput = document.getElementById('cancelCategoryInput')
         let categories = Array.from(document.getElementsByClassName('newCategory'))
-        let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
         categories.forEach(category => {
             category.addEventListener('click', displayCategoryHeading)
             category.addEventListener('click', setActiveCategory)
         })
-        
+        let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
         deleteCategoryIcons.forEach(button => {
             button.addEventListener('click', deleteCategory)
         })
@@ -42,8 +39,7 @@ const Category = (() => {
         })
     }
     setCategoryListeners()
-   
-    return{setCategoryListeners, categoryCollection}
+    return{setCategoryListeners}
 })()
 
 const addTaskListeners = () => {
@@ -72,21 +68,10 @@ const addTaskListeners = () => {
         //     newTaskSubmission = false
         // })
 } 
+
 addTaskListeners()
-
+renderCategories()
 export {Category, addTaskListeners}
-
-
-// let categoryCollection
-// if (localStorage.getItem('categoryCollection')) {
-// categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-// } else {
-// categoryCollection = []
-// }
-// localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-// let data = JSON.parse(localStorage.getItem('categoryCollection'));
-
-
 
 
 

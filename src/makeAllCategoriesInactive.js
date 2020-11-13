@@ -1,7 +1,7 @@
-import {Category} from './index.js'
+import {getCategoryCollection} from './localStorage.js'
 
 const makeAllCategoriesInactive = () =>{
-    Category.categoryCollection.forEach(category => {
+    getCategoryCollection().forEach(category => {
         category.active = false
     })
 }

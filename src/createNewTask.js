@@ -1,4 +1,4 @@
-import {Category} from './index.js'
+import {getCategoryCollection} from './localStorage.js'
 import {task} from './classConstructor.js'
 import {renderTasks} from './renderTasks.js'
 
@@ -66,7 +66,7 @@ function _resetTaskInputValues (){
 }
 
 function _identifyActiveCategory(){
-    let activeCategory = Category.categoryCollection.find(element => element.active === true);
+    let activeCategory = getCategoryCollection.find(element => element.active === true);
     return activeCategory
 }
 

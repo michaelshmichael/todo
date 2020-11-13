@@ -1,9 +1,10 @@
 import {Category} from './index.js'
 
 const renderCategories = () => {
+    let data = JSON.parse(localStorage.getItem('categoryCollection'));
     let counter = 0
     bottomLeftCategoryContainer.textContent = ''
-    Category.categoryCollection.forEach(category => {
+    data.forEach(category => {
         let newCategoryContainer = document.createElement('p')
         newCategoryContainer.classList.add('newCategory')
         newCategoryContainer.textContent = category.id
