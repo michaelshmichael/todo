@@ -4,7 +4,8 @@ import {displayCategoryHeading} from './displayCategoryHeading.js'
 import {deleteCategory} from './deleteCategory.js'
 import {setActiveCategory} from './setActiveCategory.js'
 import {renderTasks} from './renderTasks.js'
-
+import {orderTasksByImportance} from './orderTasksByImportance.js'
+import {orderTasksByDate} from './orderTasksByDate.js'
 // let categoryCollection
 // if (localStorage.getItem('categoryCollection')) {
 // categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
@@ -218,29 +219,9 @@ const Tasks = (() => {
     //     addTaskToActiveCategory(newTask)
     // }
 
-    function orderTasksByImportance() {
-        console.log('order by importance')
-        let activeCategory = Category.categoryCollection.find(element => element.active === true);
-        let activeCategoryTasks = activeCategory.tasks
-        activeCategoryTasks.sort(function(a,b){ 
-            return a.priority > b.priority ? 1 : a.priority < b.priority ? -1 : 0;
-        })
-    
-        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection)); 
-        renderTasks()  
-    }
    
     
-    function orderTasksByDate() {
-        console.log('order by date')
-        let activeCategory = Category.categoryCollection.find(element => element.active === true);
-        let activeCategoryTasks = activeCategory.tasks
-        activeCategoryTasks.sort(function(a,b){
-            return a.dueDate > b.dueDate ? 1 : a.dueDate < b.dueDate ? -1 : 0;
-        })
-        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-        renderTasks()
-    }
+    
     
    
     function deleteTask(e) { 
@@ -252,7 +233,6 @@ const Tasks = (() => {
             renderTasks()
         }
     }
-    return {renderTasks}
 })()
 
 export {Category, Tasks}
