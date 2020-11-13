@@ -1,5 +1,6 @@
-import {Category, Tasks} from './index.js'
+import {Category} from './index.js'
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
+import {renderTasks} from './renderTasks.js'
 
 const setActiveCategory = (e) => {
     let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
@@ -12,7 +13,7 @@ const setActiveCategory = (e) => {
     makeAllCategoriesInactive()
     Category.categoryCollection[selectedCategoryNum].active = true
     //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-    Tasks.renderTasks(); 
+    renderTasks(); 
 }
 
 export {setActiveCategory}

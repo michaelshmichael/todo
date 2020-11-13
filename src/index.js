@@ -8,6 +8,9 @@ import {orderTasksByImportance} from './orderTasksByImportance.js'
 import {orderTasksByDate} from './orderTasksByDate.js'
 import {setTaskAsComplete} from './alteringExistingTasks.js'
 import {deleteTask} from './alteringExistingTasks.js'
+import {displayTaskInputForm} from './createNewTask.js'
+import {setNewTaskValues} from './createNewTask.js'
+import {cancelTaskInput} from './createNewTask.js'
 
 
 const Category = (() => {
@@ -52,30 +55,20 @@ const Category = (() => {
 })()
 
 const Tasks = (() => {
-
-    const addTaskButton = document.getElementById('addTaskButton')
-    const submitButton = document.getElementById('submitButton')
-    const cancelInputButton = document.getElementById('cancelButton')
-    const inputTable = document.querySelector('.inputTable')
-    const inputTableContainer = document.getElementById('inputTableContainer')
-    const importanceButton = document.getElementById('importanceButton')
-    const dateButton = document.getElementById('dateButton')
     
-
     function addTaskListeners(){
+        const addTaskButton = document.getElementById('addTaskButton')
+        const submitButton = document.getElementById('submitButton')
+        const cancelInputButton = document.getElementById('cancelButton')
+        const importanceButton = document.getElementById('importanceButton')
+        const dateButton = document.getElementById('dateButton')
         addTaskButton.addEventListener('click', displayTaskInputForm)
         submitButton.addEventListener('click', setNewTaskValues)
         //submitButton.addEventListener('click', setEditedTaskValue)
-        
+        cancelInputButton.addEventListener('click', cancelTaskInput)
         let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
         deleteTaskIcons.forEach(button => {
                 button.addEventListener('click', deleteTask)
-        })
-        cancelInputButton.addEventListener('click', () =>{
-            inputTable.classList.remove('inputTableActive')
-            inputTable.classList.add('inputTable')
-            inputTableContainer.setAttribute('id', 'inputTableContainer')
-            resetTaskInputValues()
         })
         importanceButton.addEventListener('click', orderTasksByImportance)
         dateButton.addEventListener('click', orderTasksByDate)
@@ -90,63 +83,29 @@ const Tasks = (() => {
         // })
     }
     addTaskListeners()
-
-    function displayTaskInputForm(e){
-        const newTaskInput = document.getElementById('taskInputField').value
-        e.preventDefault();
-        if (Category.identifyActiveCategory() === undefined){
-            alert('Please Select a Category')
-        } else if(newTaskInput === ''){
-            alert('Please Enter a Value')
-        } else if (newTaskInput){
-        let taskTitleForm = document.getElementById('taskTitleForm')
-        inputTable.classList.remove('inputTable')
-        inputTable.classList.add('inputTableActive')
-        inputTableContainer.setAttribute('id', 'inputTableContainerActive')
-        taskTitleForm.textContent = `Details For ${newTaskInput}` 
-        }
-    }
     
-    function setNewTaskValues() {
-        let taskID = document.getElementById('taskInputField').value
-        let dueDateValue = document.getElementById('dueDate').value
-        let priorityValue
-        if (document.getElementById('highPriority').checked) {
-            priorityValue = 1
-        } else if (document.getElementById('mediumPriority').checked) {
-            priorityValue = 2
-        } else if (document.getElementById('lowPriority').checked){
-            priorityValue = 3
-        } else {
-            alert('Please Select a Priority Level')
-            setNewTaskValues()
-        }
-        let notesValue = document.getElementById('notes').value
-        let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
-        addTaskToActiveCategory(newTask)
-    }
-
-    function addTaskToActiveCategory(newTask) {
-        Category.identifyActiveCategory().tasks.push(newTask)
-        inputTable.classList.remove('inputTableActive')
-        inputTableContainer.setAttribute('id', 'inputTableContainer')
-        //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-        resetTaskInputValues()
-        renderTasks()
-    }
-
+    return {addTaskListeners}
     
+})()
 
-    function resetTaskInputValues (){
-        let taskID = document.getElementById('taskInputField')
-        let dueDate = document.getElementById('dueDate')
-        let notes = document.getElementById('notes')
-        taskID.value = ''
-        dueDate.value = ''
-        notes.value = ''
-    }
+export {Category, Tasks}
 
-    //HERE ARE EDITING FUCTIONS HIDDEN
+
+// let categoryCollection
+// if (localStorage.getItem('categoryCollection')) {
+// categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+// } else {
+// categoryCollection = []
+// }
+// localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+// let data = JSON.parse(localStorage.getItem('categoryCollection'));
+
+
+
+
+
+
+  //HERE ARE EDITING FUCTIONS HIDDEN
     // function editTaskContent(e) {
     //     let editNumber = e.target.dataset.index
     //     let activeCategory = categoryCollection.find(element => element.active === true);
@@ -200,18 +159,3 @@ const Tasks = (() => {
     //     //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     //     addTaskToActiveCategory(newTask)
     // }
-
-    return {addTaskListeners}
-    
-})()
-
-// let categoryCollection
-// if (localStorage.getItem('categoryCollection')) {
-// categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-// } else {
-// categoryCollection = []
-// }
-// localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
-// let data = JSON.parse(localStorage.getItem('categoryCollection'));
-
-export {Category, Tasks}
