@@ -1,8 +1,7 @@
 import {renderTasks} from './renderTasks.js'
-import {getCategoryCollection} from './localStorage.js'
 
 const orderTasksByDate = () => {
-    let activeCategory = getCategoryCollection().find(element => element.active === true);
+    let activeCategory = categoryCollection.find(element => element.active === true);
     let activeCategoryTasks = activeCategory.tasks
     activeCategoryTasks.sort(function(a,b){
         return a.dueDate > b.dueDate ? 1 : a.dueDate < b.dueDate ? -1 : 0;
@@ -12,7 +11,7 @@ const orderTasksByDate = () => {
 }
 
 const orderTasksByImportance = () => {
-    let activeCategory = getCategoryCollection().find(element => element.active === true);
+    let activeCategory = categoryCollection.find(element => element.active === true);
     let activeCategoryTasks = activeCategory.tasks
     activeCategoryTasks.sort(function(a,b){ 
         return a.priority > b.priority ? 1 : a.priority < b.priority ? -1 : 0;

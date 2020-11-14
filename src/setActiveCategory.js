@@ -1,10 +1,5 @@
-import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
-import {renderTasks} from './renderTasks.js'
-import {getCategoryCollection} from './localStorage.js'
-
-
 const setActiveCategory = (e) => {
-    let categoryCollection = getCategoryCollection()
+    let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
     displayedCategories.forEach(category => {
         category.classList.remove('activeCategory')

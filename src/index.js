@@ -31,12 +31,14 @@ const Category = (() => {
         let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
         deleteCategoryIcons.forEach(button => {
             button.addEventListener('click', deleteCategory)
+            button.addEventListener('click', renderCategories)
         })
         displayCategoryInput.addEventListener('click', () => {
             categoryInputTable.classList.remove('categoryInputTable')
             categoryInputTable.classList.add('categoryInputTableActive')
         })
         submitCategory.addEventListener('click', createNewCategory)
+        submitCategory.addEventListener('click', renderCategories)
         cancelCategoryInput.addEventListener('click', () => {
             categoryInputTable.classList.remove('categoryInputTableActive')
             categoryInputTable.classList.add('categoryInputTable')
@@ -58,16 +60,17 @@ const addTaskListeners = () => {
         submitButton.addEventListener('click', setNewTaskValues)
         //submitButton.addEventListener('click', setEditedTaskValue)
         cancelInputButton.addEventListener('click', cancelTaskInput)
-        let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
-        deleteTaskIcons.forEach(button => {
-                button.addEventListener('click', deleteTask)
-        })
-        importanceButton.addEventListener('click', orderTasksByImportance)
-        dateButton.addEventListener('click', orderTasksByDate)
-        let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', setTaskAsComplete)
-            })
+        //let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
+        // deleteTaskIcons.forEach(button => {
+        //         button.addEventListener('click', deleteTask)
+        // })
+        //importanceButton.addEventListener('click', orderTasksByImportance)
+        //dateButton.addEventListener('click', orderTasksByDate)
+        // let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
+        //     checkboxes.forEach(checkbox => {
+        //         checkbox.addEventListener('click', setTaskAsComplete)
+        //     })
+
         //let editTaskIcons = Array.from(document.getElementsByClassName('editTaskIcon'))
         // editTaskIcons.forEach(icon => {
         //     icon.addEventListener('click', editTaskContent)

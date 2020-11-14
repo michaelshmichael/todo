@@ -2,10 +2,15 @@ import {Category} from './index.js'
 import {toDoCategory} from './classConstructor'
 import {renderCategories} from './renderCategories.js'
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
-import {getCategoryCollection} from './localStorage.js'
+
+let categoryCollection
+if (localStorage.getItem('categoryCollection')) {
+    categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+} else {
+    categoryCollection = []
+}
 
 const createNewCategory = () => {
-    let categoryCollection = getCategoryCollection()
     const categoryInputTable = document.querySelector('.categoryInputTableActive')
     let categoryInputField = document.getElementById('categoryInputField')
     let newCategoryName = categoryInputField.value
@@ -19,8 +24,7 @@ const createNewCategory = () => {
         Category.setCategoryListeners()
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     }
-    renderCategories()
-    makeAllCategoriesInactive()
+    //makeAllCategoriesInactive()
     categoryInputField.value = ''
 }
 

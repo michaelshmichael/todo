@@ -1,27 +1,30 @@
-import {getCategoryCollection} from './localStorage.js'
 import {task} from './classConstructor.js'
-import {renderTasks} from './renderTasks.js'
 
 const inputTable = document.querySelector('.inputTable')
 const inputTableContainer = document.getElementById('inputTableContainer')
 const taskTitleForm = document.getElementById('taskTitleForm')
 
 const displayTaskInputForm = (e) => {
+    let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+    let activeCategory = categoryCollection.find(category => category.active == true);
     const newTaskInput = document.getElementById('taskInputField').value
     e.preventDefault();
-    if (_identifyActiveCategory() === undefined){
+    if (activeCategory === undefined){
         alert('Please Select a Category')
     } else if(newTaskInput === ''){
         alert('Please Enter a Value')
-    } else if (newTaskInput){
+    } else if(newTaskInput){
     inputTable.classList.remove('inputTable')
     inputTable.classList.add('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainerActive')
     taskTitleForm.textContent = `Details For ${newTaskInput}` 
+    console.log(categoryCollection)
     }
 }
 
 const setNewTaskValues = () => {
+    let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+    let activeCategory = categoryCollection.find(category => category.active === true);
     let taskID = document.getElementById('taskInputField').value
     let dueDateValue = document.getElementById('dueDate').value
     let priorityValue
@@ -33,20 +36,17 @@ const setNewTaskValues = () => {
         priorityValue = 3
     } else {
         alert('Please Select a Priority Level')
-        setNewTaskValues()
     }
     let notesValue = document.getElementById('notes').value
     let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
-    _addTaskToActiveCategory(newTask)
-}
 
-const _addTaskToActiveCategory = (newTask) => {
-    _identifyActiveCategory().tasks.push(newTask)
+    activeCategory.tasks.push(newTask)
     inputTable.classList.remove('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainer')
-    //localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
+    localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     _resetTaskInputValues()
-    renderTasks()
+    //makeAllCategoriesInactive()
+    //renderTasks()
 }
 
 const cancelTaskInput = () => {
@@ -63,11 +63,6 @@ function _resetTaskInputValues (){
     taskID.value = ''
     dueDate.value = ''
     notes.value = ''
-}
-
-function _identifyActiveCategory(){
-    let activeCategory = getCategoryCollection().find(element => element.active === true);
-    return activeCategory
 }
 
 export {displayTaskInputForm, setNewTaskValues, cancelTaskInput}

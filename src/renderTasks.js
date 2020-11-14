@@ -1,11 +1,11 @@
 import {addTaskListeners} from './index.js'
-import {getCategoryCollection} from './localStorage.js'
 
 const renderTasks = () => {
+    let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     let counter = 0
     document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
     document.querySelectorAll('.completedTasksDisplay').forEach(e => e.remove());
-    let activeCategory = getCategoryCollection().find(element => element.active === true);
+    let activeCategory = categoryCollection.find(element => element.active === true);
     let activeCategoryTasks = activeCategory.tasks
     activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('div');

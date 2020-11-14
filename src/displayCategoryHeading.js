@@ -1,8 +1,5 @@
-import {getCategoryCollection} from './localStorage.js'
-
-let categoryCollection = getCategoryCollection()
-
 const displayCategoryHeading = (e) => {
+    let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     topRightContainer.textContent = '';
     let selectedCategory = e.target.id
     let categoryDisplay = document.createElement('h1')
