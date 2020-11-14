@@ -1,4 +1,5 @@
 import {task} from './classConstructor.js'
+import {renderTasks} from './renderTasks.js'
 
 const inputTable = document.querySelector('.inputTable')
 const inputTableContainer = document.getElementById('inputTableContainer')
@@ -39,14 +40,13 @@ const setNewTaskValues = () => {
     }
     let notesValue = document.getElementById('notes').value
     let newTask = new task (taskID, dueDateValue, priorityValue, false, notesValue)
-
     activeCategory.tasks.push(newTask)
     inputTable.classList.remove('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainer')
     localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     _resetTaskInputValues()
     //makeAllCategoriesInactive()
-    //renderTasks()
+    renderTasks()
 }
 
 const cancelTaskInput = () => {
