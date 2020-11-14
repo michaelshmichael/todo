@@ -7,7 +7,7 @@ const taskTitleForm = document.getElementById('taskTitleForm')
 
 const displayTaskInputForm = (e) => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-    let activeCategory = categoryCollection.find(category => category.active == true);
+    let activeCategory = categoryCollection.find(category => category.active);
     const newTaskInput = document.getElementById('taskInputField').value
     e.preventDefault();
     if (activeCategory == undefined){
@@ -19,13 +19,12 @@ const displayTaskInputForm = (e) => {
     inputTable.classList.add('inputTableActive')
     inputTableContainer.setAttribute('id', 'inputTableContainerActive')
     taskTitleForm.textContent = `Details For ${newTaskInput}` 
-    console.log(categoryCollection)
     }
 }
 
 const setNewTaskValues = () => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-    let activeCategory = categoryCollection.find(category => category.active === true);
+    let activeCategory = categoryCollection.find(category => category.active);
     let taskID = document.getElementById('taskInputField').value
     let dueDateValue = document.getElementById('dueDate').value
     let priorityValue
@@ -45,7 +44,6 @@ const setNewTaskValues = () => {
     inputTableContainer.setAttribute('id', 'inputTableContainer')
     localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     _resetTaskInputValues()
-    //makeAllCategoriesInactive()
     renderTasks()
 }
 

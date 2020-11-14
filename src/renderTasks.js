@@ -5,7 +5,7 @@ const renderTasks = () => {
     let counter = 0
     document.querySelectorAll('.tasksDisplay').forEach(e => e.remove());
     document.querySelectorAll('.completedTasksDisplay').forEach(e => e.remove());
-    let activeCategory = categoryCollection.find(element => element.active === true);
+    let activeCategory = categoryCollection.find(element => element.active);
     let activeCategoryTasks = activeCategory.tasks
     activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('div');
