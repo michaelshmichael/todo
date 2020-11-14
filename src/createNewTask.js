@@ -66,7 +66,7 @@ function _resetTaskInputValues (){
 }
 
 function _identifyActiveCategory(){
-    let activeCategory = getCategoryCollection.find(element => element.active === true);
+    let activeCategory = getCategoryCollection().find(element => element.active === true);
     return activeCategory
 }
 

@@ -10,6 +10,9 @@ import {displayTaskInputForm} from './createNewTask.js'
 import {setNewTaskValues} from './createNewTask.js'
 import {cancelTaskInput} from './createNewTask.js'
 import {renderCategories} from './renderCategories.js'
+import {renderTasks} from './renderTasks.js'
+import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
+
 
 const Category = (() => {
     const setCategoryListeners = () =>{
@@ -21,7 +24,9 @@ const Category = (() => {
         let categories = Array.from(document.getElementsByClassName('newCategory'))
         categories.forEach(category => {
             category.addEventListener('click', displayCategoryHeading)
+            category.addEventListener('click', makeAllCategoriesInactive)
             category.addEventListener('click', setActiveCategory)
+            //category.addEventListener('click', renderTasks)
         })
         let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
         deleteCategoryIcons.forEach(button => {
@@ -38,6 +43,7 @@ const Category = (() => {
             categoryInputField.value = ''
         })
     }
+    makeAllCategoriesInactive()
     setCategoryListeners()
     return{setCategoryListeners}
 })()
