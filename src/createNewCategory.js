@@ -1,6 +1,6 @@
-import {Category} from './index.js'
+import {addCategoryListeners} from './index.js'
 import {toDoCategory} from './classConstructor'
-import {renderCategories} from './renderCategories.js'
+
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
 
 let categoryCollection
@@ -21,10 +21,10 @@ const createNewCategory = () => {
         categoryCollection.push(newCategory)
         categoryInputTable.classList.remove('categoryInputTableActive')
         categoryInputTable.classList.add('categoryInputTable')
-        Category.setCategoryListeners()
+        addCategoryListeners()
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     }
-    //makeAllCategoriesInactive()
+    makeAllCategoriesInactive()
     categoryInputField.value = ''
 }
 

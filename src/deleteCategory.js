@@ -1,4 +1,4 @@
-import {Category} from './index.js'
+import {addCategoryListeners} from './index.js'
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js';
 
 const deleteCategory = (e) => {
@@ -10,7 +10,7 @@ const deleteCategory = (e) => {
         localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection))
     }
     makeAllCategoriesInactive()
-    Category.setCategoryListeners()
+    addCategoryListeners()
     
 }
 export {deleteCategory}

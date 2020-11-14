@@ -1,4 +1,4 @@
-import {Category} from './index.js'
+import {addCategoryListeners} from './index.js'
 
 const renderCategories = () => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'));
@@ -19,7 +19,7 @@ const renderCategories = () => {
         counter ++
     })
     counter = 0
-    Category.setCategoryListeners()
+    addCategoryListeners()
 }
 
 export {renderCategories}

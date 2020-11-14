@@ -1,54 +1,50 @@
-import {createNewCategory} from './createNewCategory.js'
+import {renderCategories} from './renderCategories.js'
 import {displayCategoryHeading} from './displayCategoryHeading.js'
-import {deleteCategory} from './deleteCategory.js'
+import {createNewCategory} from './createNewCategory.js'
+import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
 import {setActiveCategory} from './setActiveCategory.js'
-import {orderTasksByImportance} from './reorderTasks.js'
-import {orderTasksByDate} from './reorderTasks.js'
-import {setTaskAsComplete} from './editExistingTasks.js'
-import {deleteTask} from './editExistingTasks.js'
+import {deleteCategory} from './deleteCategory.js'
+
 import {displayTaskInputForm} from './createNewTask.js'
 import {setNewTaskValues} from './createNewTask.js'
 import {cancelTaskInput} from './createNewTask.js'
-import {renderCategories} from './renderCategories.js'
-import {renderTasks} from './renderTasks.js'
-import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
+import {setTaskAsComplete} from './editExistingTasks.js'
+import {deleteTask} from './editExistingTasks.js'
+
+import {orderTasksByImportance} from './reorderTasks.js'
+import {orderTasksByDate} from './reorderTasks.js'
 
 
-const Category = (() => {
-    const setCategoryListeners = () =>{
-        const displayCategoryInput = document.getElementById('addCategoryButton')
-        const categoryInputTable = document.querySelector('.categoryInputTable')
-        const categoryInputField = document.getElementById('categoryInputField')
-        const submitCategory = document.getElementById('submitCategory')
-        const cancelCategoryInput = document.getElementById('cancelCategoryInput')
-        let categories = Array.from(document.getElementsByClassName('newCategory'))
-        categories.forEach(category => {
-            category.addEventListener('click', displayCategoryHeading)
-            category.addEventListener('click', makeAllCategoriesInactive)
-            category.addEventListener('click', setActiveCategory)
-            //category.addEventListener('click', renderTasks)
-        })
-        let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
-        deleteCategoryIcons.forEach(button => {
-            button.addEventListener('click', deleteCategory)
-            button.addEventListener('click', renderCategories)
-        })
-        displayCategoryInput.addEventListener('click', () => {
-            categoryInputTable.classList.remove('categoryInputTable')
-            categoryInputTable.classList.add('categoryInputTableActive')
-        })
-        submitCategory.addEventListener('click', createNewCategory)
-        submitCategory.addEventListener('click', renderCategories)
-        cancelCategoryInput.addEventListener('click', () => {
-            categoryInputTable.classList.remove('categoryInputTableActive')
-            categoryInputTable.classList.add('categoryInputTable')
-            categoryInputField.value = ''
-        })
-    }
-    makeAllCategoriesInactive()
-    setCategoryListeners()
-    return{setCategoryListeners}
-})()
+const addCategoryListeners = () =>{
+    const displayCategoryInput = document.getElementById('addCategoryButton')
+    const categoryInputTable = document.querySelector('.categoryInputTable')
+    const categoryInputField = document.getElementById('categoryInputField')
+    const submitCategory = document.getElementById('submitCategory')
+    const cancelCategoryInput = document.getElementById('cancelCategoryInput')
+    let categories = Array.from(document.getElementsByClassName('newCategory'))
+    categories.forEach(category => {
+        category.addEventListener('click', displayCategoryHeading)
+        category.addEventListener('click', makeAllCategoriesInactive)
+        category.addEventListener('click', setActiveCategory)
+    })
+    let deleteCategoryIcons = Array.from(document.getElementsByClassName('deleteCategoryIcon'))
+    deleteCategoryIcons.forEach(button => {
+        button.addEventListener('click', deleteCategory)
+        button.addEventListener('click', renderCategories)
+    })
+    displayCategoryInput.addEventListener('click', () => {
+        categoryInputTable.classList.remove('categoryInputTable')
+        categoryInputTable.classList.add('categoryInputTableActive')
+    })
+    submitCategory.addEventListener('click', createNewCategory)
+    submitCategory.addEventListener('click', renderCategories)
+    cancelCategoryInput.addEventListener('click', () => {
+        categoryInputTable.classList.remove('categoryInputTableActive')
+        categoryInputTable.classList.add('categoryInputTable')
+        categoryInputField.value = ''
+    })
+}
+addCategoryListeners()
 
 const addTaskListeners = () => {
         const addTaskButton = document.getElementById('addTaskButton')
@@ -78,8 +74,8 @@ const addTaskListeners = () => {
         // })
 } 
 renderCategories()
-
-export {Category, addTaskListeners}
+makeAllCategoriesInactive()
+export {addCategoryListeners, addTaskListeners}
 
 
 

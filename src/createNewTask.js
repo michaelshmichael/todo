@@ -10,7 +10,7 @@ const displayTaskInputForm = (e) => {
     let activeCategory = categoryCollection.find(category => category.active == true);
     const newTaskInput = document.getElementById('taskInputField').value
     e.preventDefault();
-    if (activeCategory === undefined){
+    if (activeCategory == undefined){
         alert('Please Select a Category')
     } else if(newTaskInput === ''){
         alert('Please Enter a Value')
