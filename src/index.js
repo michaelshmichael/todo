@@ -64,8 +64,8 @@ const addTaskListeners = () => {
         deleteTaskIcons.forEach(button => {
                 button.addEventListener('click', deleteTask)
         })
-        // importanceButton.addEventListener('click', orderTasksByImportance)
-        // dateButton.addEventListener('click', orderTasksByDate)
+        importanceButton.addEventListener('click', orderTasksByImportance)
+        dateButton.addEventListener('click', orderTasksByDate)
         let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('click', setTaskAsComplete)
@@ -77,9 +77,8 @@ const addTaskListeners = () => {
         //     newTaskSubmission = false
         // })
 } 
-
-addTaskListeners()
 renderCategories()
+
 export {Category, addTaskListeners}
 
 
