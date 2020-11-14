@@ -1,4 +1,6 @@
 import {addTaskListeners} from './index.js'
+import {formatDistance} from 'date-fns'
+import parseISO from 'date-fns/parseISO'
 
 const renderTasks = () => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
@@ -37,7 +39,8 @@ const renderTasks = () => {
 
         let dueDate = document.createElement('div')
         dueDate.setAttribute('class', 'dueDate')
-        dueDate.textContent = `Due: ${task.dueDate}`
+        let styledDate = formatDistance(parseISO(task.dueDate), new Date())
+        dueDate.textContent = `Due: ${styledDate}`
 
         let notesContainer = document.createElement('div')
         notesContainer.setAttribute('class', 'notesContainer')
