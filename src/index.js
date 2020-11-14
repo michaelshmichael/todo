@@ -4,8 +4,8 @@ import {deleteCategory} from './deleteCategory.js'
 import {setActiveCategory} from './setActiveCategory.js'
 import {orderTasksByImportance} from './reorderTasks.js'
 import {orderTasksByDate} from './reorderTasks.js'
-import {setTaskAsComplete} from './alteringExistingTasks.js'
-import {deleteTask} from './alteringExistingTasks.js'
+import {setTaskAsComplete} from './editExistingTasks.js'
+import {deleteTask} from './editExistingTasks.js'
 import {displayTaskInputForm} from './createNewTask.js'
 import {setNewTaskValues} from './createNewTask.js'
 import {cancelTaskInput} from './createNewTask.js'
@@ -60,16 +60,16 @@ const addTaskListeners = () => {
         submitButton.addEventListener('click', setNewTaskValues)
         //submitButton.addEventListener('click', setEditedTaskValue)
         cancelInputButton.addEventListener('click', cancelTaskInput)
-        //let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
-        // deleteTaskIcons.forEach(button => {
-        //         button.addEventListener('click', deleteTask)
-        // })
-        //importanceButton.addEventListener('click', orderTasksByImportance)
-        //dateButton.addEventListener('click', orderTasksByDate)
-        // let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
-        //     checkboxes.forEach(checkbox => {
-        //         checkbox.addEventListener('click', setTaskAsComplete)
-        //     })
+        let deleteTaskIcons = Array.from(document.getElementsByClassName('deleteTaskIcon'))
+        deleteTaskIcons.forEach(button => {
+                button.addEventListener('click', deleteTask)
+        })
+        // importanceButton.addEventListener('click', orderTasksByImportance)
+        // dateButton.addEventListener('click', orderTasksByDate)
+        let checkboxes = Array.from(document.getElementsByClassName('checkboxComplete'))
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', setTaskAsComplete)
+            })
 
         //let editTaskIcons = Array.from(document.getElementsByClassName('editTaskIcon'))
         // editTaskIcons.forEach(icon => {
