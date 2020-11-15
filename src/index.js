@@ -73,6 +73,7 @@ const addTaskListeners = () => {
         //     newTaskSubmission = false
         // })
 } 
+addTaskListeners()
 
 renderCategories()
 makeAllCategoriesInactive()
