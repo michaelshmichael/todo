@@ -39,8 +39,12 @@ const renderTasks = () => {
 
         let dueDate = document.createElement('div')
         dueDate.setAttribute('class', 'dueDate')
+        if (task.dueDate){
         let styledDate = formatDistance(parseISO(task.dueDate), new Date())
-        dueDate.textContent = `Due: ${styledDate}`
+        dueDate.textContent = `Due in ${styledDate}`
+        } else {
+            dueDate.textContent = 'No due date'
+        }
 
         let notesContainer = document.createElement('div')
         notesContainer.setAttribute('class', 'notesContainer')
