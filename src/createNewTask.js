@@ -5,7 +5,7 @@ const inputTable = document.querySelector('.inputTable')
 const inputTableContainer = document.getElementById('inputTableContainer')
 const taskTitleForm = document.getElementById('taskTitleForm')
 
-const displayTaskInputForm = (e) => {
+const displayTaskInputForm = e => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     let activeCategory = categoryCollection.find(category => category.active);
     const newTaskInput = document.getElementById('taskInputField').value
