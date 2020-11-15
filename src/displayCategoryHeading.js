@@ -1,4 +1,4 @@
-const displayCategoryHeading = (e) => {
+const displayCategoryHeading = e => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     topRightContainer.textContent = '';
     let selectedCategory = e.target.id

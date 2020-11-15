@@ -1,6 +1,6 @@
 import {renderTasks} from './renderTasks.js'
 
-const setTaskAsComplete = (e) => {
+const setTaskAsComplete = e => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     let checkboxNumber = e.target.dataset.index
     let activeCategory = categoryCollection.find(element => element.active);

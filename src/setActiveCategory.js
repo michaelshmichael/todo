@@ -1,6 +1,6 @@
 import {renderTasks} from "./renderTasks";
 
-const setActiveCategory = (e) => {
+const setActiveCategory = e => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     let displayedCategories = Array.from(document.getElementsByClassName('newCategory'));
     displayedCategories.forEach(category => {

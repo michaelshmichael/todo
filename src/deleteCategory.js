@@ -2,7 +2,7 @@ import {addCategoryListeners} from './index.js'
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js';
 import {renderTasks} from './renderTasks.js';
 
-const deleteCategory = (e) => {
+const deleteCategory = e => {
     if (confirm("Delete Category?")) {
         let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
         document.querySelectorAll('.tasksDisplay .completedTasksDisplay').forEach(task => task.remove());

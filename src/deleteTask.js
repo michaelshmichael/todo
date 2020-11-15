@@ -1,6 +1,6 @@
 import {renderTasks} from './renderTasks.js'
     
-const deleteTask = (e) => {
+const deleteTask = e => {
     let categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
     let activeCategory = categoryCollection.find(element => element.active === true);
     if (confirm("Delete Task?")) { 
