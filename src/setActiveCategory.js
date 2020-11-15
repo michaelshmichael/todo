@@ -6,10 +6,10 @@ const setActiveCategory = (e) => {
     displayedCategories.forEach(category => {
         category.classList.remove('activeCategory')
     })
-    let selectedCategoryNum = e.target.id
-    let activeCategory = displayedCategories[selectedCategoryNum]
+    let selectedCategoryNumber = e.target.id
+    let activeCategory = displayedCategories[selectedCategoryNumber]
     activeCategory.classList.add('activeCategory')
-    categoryCollection[selectedCategoryNum].active = true
+    categoryCollection[selectedCategoryNumber].active = true
     localStorage.setItem('categoryCollection', JSON.stringify(categoryCollection));
     renderTasks()
 }

@@ -12,7 +12,7 @@ const displayTaskInputForm = (e) => {
     e.preventDefault();
     if (activeCategory == undefined){
         alert('Please Select a Category')
-    } else if(newTaskInput === ''){
+    } else if(!newTaskInput){
         alert('Please Enter a Value')
     } else if(newTaskInput){
     inputTable.classList.remove('inputTable')

@@ -11,22 +11,18 @@ const renderTasks = () => {
     let activeCategoryTasks = activeCategory.tasks
     activeCategoryTasks.forEach(task => {
         let tasksDisplay = document.createElement('div');
-        if(task.checklist == false){
-            tasksDisplay.setAttribute('class', 'tasksDisplay')
-        } else {
-             tasksDisplay.setAttribute('class', 'completedTasksDisplay') 
-        }
+        task.checklist ? tasksDisplay.setAttribute('class', 'completedTasksDisplay') : tasksDisplay.setAttribute('class', 'tasksDisplay')
+        
         let taskInfoContainer = document.createElement('div')
         taskInfoContainer.setAttribute('class', 'taskInfoContainer')
         bottomRightContainer.appendChild(tasksDisplay)
-        
         let priorityIndicator = document.createElement('div')
 
-            if(task.priority == 1){
+            if(task.priority === 1){
                 priorityIndicator.classList.add('highPriorityIndicator')
-            } else if (task.priority == 2){
+            } else if (task.priority === 2){
                 priorityIndicator.classList.add('mediumPriorityIndicator')
-            } else if (task.priority == 3){
+            } else if (task.priority === 3){
                 priorityIndicator.classList.add('lowPriorityIndicator')
             }
 
@@ -40,8 +36,8 @@ const renderTasks = () => {
         let dueDate = document.createElement('div')
         dueDate.setAttribute('class', 'dueDate')
         if (task.dueDate){
-        let styledDate = formatDistance(parseISO(task.dueDate), new Date())
-        dueDate.textContent = `Due in ${styledDate}`
+            let styledDate = formatDistance(parseISO(task.dueDate), new Date())
+            dueDate.textContent = `Due in ${styledDate}`
         } else {
             dueDate.textContent = 'No due date'
         }
@@ -51,6 +47,7 @@ const renderTasks = () => {
 
         let notesHeading = document.createElement('div')
         notesHeading.setAttribute('class', 'notesHeading')
+        notesHeading.textContent = 'Notes'
 
         let notesContent = document.createElement('div')
         notesContent.setAttribute('class', 'notesContent')
@@ -64,8 +61,7 @@ const renderTasks = () => {
         taskInfoContainer.appendChild(notesContainer)
         notesContainer.appendChild(notesHeading)
         notesContainer.appendChild(notesContent)
-        notesHeading.textContent = 'Notes'
-
+        
         let deleteEditAndCheckContainer = document.createElement('div')
         deleteEditAndCheckContainer.setAttribute('class', 'deleteEditAndCheckContainer')
         taskInfoContainer.appendChild(deleteEditAndCheckContainer)
@@ -75,13 +71,11 @@ const renderTasks = () => {
         deleteTaskIcon.setAttribute('data-index', `${counter}`)
         deleteEditAndCheckContainer.appendChild(deleteTaskIcon)
         
-
         let editTaskIcon = document.createElement('i')
         editTaskIcon.setAttribute('class', 'fa fa-edit editTaskIcon')
         editTaskIcon.setAttribute('data-index', `${counter}`)
         deleteEditAndCheckContainer.appendChild(editTaskIcon)
         
-
         let checkboxComplete = document.createElement('i')
         checkboxComplete.setAttribute('class', 'fa fa-check-circle checkboxComplete')
         checkboxComplete.setAttribute('data-index', `${counter}`)
