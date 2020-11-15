@@ -1,5 +1,6 @@
 import {addCategoryListeners} from './index.js'
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js';
+import {renderTasks} from './renderTasks.js';
 
 const deleteCategory = (e) => {
     if (confirm("Delete Category?")) {
@@ -11,6 +12,7 @@ const deleteCategory = (e) => {
     }
     makeAllCategoriesInactive()
     addCategoryListeners()
+    renderTasks()
     
 }
 export {deleteCategory}
