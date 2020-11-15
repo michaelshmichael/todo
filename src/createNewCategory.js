@@ -1,16 +1,15 @@
 import {addCategoryListeners} from './index.js'
 import {toDoCategory} from './classConstructor'
-
 import {makeAllCategoriesInactive} from './makeAllCategoriesInactive.js'
 
-let categoryCollection
-if (localStorage.getItem('categoryCollection')) {
-    categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
-} else {
-    categoryCollection = []
-}
-
 const createNewCategory = () => {
+    let categoryCollection
+        if (localStorage.getItem('categoryCollection')) {
+            categoryCollection = JSON.parse(localStorage.getItem('categoryCollection'))
+        } else {
+            categoryCollection = []
+        }
+        
     const categoryInputTable = document.querySelector('.categoryInputTableActive')
     let categoryInputField = document.getElementById('categoryInputField')
     let newCategoryName = categoryInputField.value
